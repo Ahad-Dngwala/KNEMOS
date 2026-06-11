@@ -1,4 +1,4 @@
-﻿# KnemOS Desktop Application
+# KnemOS Desktop Application
 
 > The native, AI-powered cognitive shell for your desktop. Built with Tauri v2, React 18, and TailwindCSS v4.
 

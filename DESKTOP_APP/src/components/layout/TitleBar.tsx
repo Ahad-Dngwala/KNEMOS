@@ -23,17 +23,17 @@ export const TitleBar = () => {
   const handleMax = () => appWindow?.toggleMaximize()
 
   return (
-    <div className="titlebar">
-      <div className="titlebar-left">
-        <div className="titlebar-logo">
-          <span className="titlebar-logo-text">KNEMOS</span>
+    <div className="titlebar" data-tauri-drag-region>
+      <div className="titlebar-left" data-tauri-drag-region>
+        <div className="titlebar-logo" data-tauri-drag-region>
+          <span className="titlebar-logo-text" data-tauri-drag-region>KNEMOS</span>
         </div>
-        <span className="titlebar-section-label">
+        <span className="titlebar-section-label" data-tauri-drag-region>
           {PANEL_LABELS[activePanel] || 'KnemOS'}
         </span>
       </div>
 
-      <div className="titlebar-right" style={{ WebkitAppRegion: 'no-drag' } as any}>
+      <div className="titlebar-right">
         {/* Backend status */}
         <div className="titlebar-status">
           <div className={`titlebar-status-dot ${isConnected ? 'connected' : ''}`} />

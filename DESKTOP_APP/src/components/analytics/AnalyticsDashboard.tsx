@@ -126,12 +126,20 @@ export const AnalyticsPanel = () => {
           style={{ fontSize: 10, padding: '10px 24px' }}
           onClick={() => {
             const data = JSON.stringify({ categories, ramStats, focusScore }, null, 2)
-            const blob = new Blob([data], { type: 'application/json' })
-            const url = URL.createObjectURL(blob)
-            const a = document.createElement('a')
-            a.href = url
-            a.download = `knemos-analytics-${Date.now()}.json`
-            a.click()
+            const isTauri = typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window
+            
+            if (isTauri) {
+              navigator.clipboard.writeText(data)
+              alert('Export data copied to clipboard! (File saving coming soon to desktop)')
+            } else {
+              const blob = new Blob([data], { type: 'application/json' })
+              const url = URL.createObjectURL(blob)
+              const a = document.createElement('a')
+              a.href = url
+              a.download = 'knemos-export.json'
+              a.click()
+              URL.revokeObjectURL(url)
+            }
           }}
         >
           Export Data

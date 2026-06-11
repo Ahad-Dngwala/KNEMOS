@@ -1,4 +1,4 @@
-﻿# KnemOS
+# KnemOS
 
 > **K**nowledge · **nem**onics · **OS**  The Cognitive Layer for Your Desktop
 
@@ -394,7 +394,12 @@ npm run build
 
 ---
 
-## Project Structure
+## Project Structure & Documentation
+
+Detailed documentation is split across the following files:
+- [Features & Roadmap](./features.md)
+- [Issues & Vulnerabilities Tracker](./issues.md)
+- [Desktop App README](./DESKTOP_APP/README.md)
 
 ```
 KnemOS/
@@ -407,19 +412,14 @@ KnemOS/
     components/
     public/
 
- app/                        # Tauri desktop application
-    src/                    # React 18 frontend
+ DESKTOP_APP/                # Tauri desktop application (Replaced /app)
+    src/                    # React 18 frontend + Zustand
        components/
-          WorkspaceSidebar.tsx
-          MemoryLane.tsx
-          AnalyticsDashboard.tsx
-          RAMMonitor.tsx
-          DeepWorkOverlay.tsx
-       store/              # Zustand state
-       hooks/
+          layout/
+          categories/       # CategoryGrid & CategoryCard UI
+          analytics/        # AnalyticsDashboard
+       store/              # ui, settings, categories, chat, system
     src-tauri/              # Rust backend shell
-        src/
-           main.rs
         tauri.conf.json
 
  backend/                    # FastAPI AI backend

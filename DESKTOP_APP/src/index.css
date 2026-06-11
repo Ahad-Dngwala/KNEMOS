@@ -97,7 +97,6 @@ body {
   border-bottom: 2px solid var(--ink);
   flex-shrink: 0;
   z-index: 100;
-  -webkit-app-region: drag;
 }
 
 .titlebar-left {
@@ -105,7 +104,6 @@ body {
   align-items: center;
   gap: 0;
   height: 100%;
-  -webkit-app-region: drag;
 }
 
 .titlebar-logo {
@@ -114,7 +112,6 @@ body {
   height: 100%;
   padding: 0 20px;
   border-right: 1px solid var(--border);
-  -webkit-app-region: drag;
 }
 
 .titlebar-logo-text {
@@ -144,14 +141,12 @@ body {
   font-weight: 500;
   color: var(--ink-3);
   padding: 0 20px;
-  -webkit-app-region: drag;
 }
 
 .titlebar-right {
   display: flex;
   align-items: center;
   gap: 8px;
-  -webkit-app-region: no-drag;
 }
 
 .titlebar-status {
