@@ -1,70 +1,141 @@
-import { useState } from 'react'
-import { FocusScore } from './FocusScore.tsx'
-import { WorkflowChart } from './WorkflowChart.tsx'
-import { useQuery } from '@tanstack/react-query'
+import { useSystemStore } from '../../store/system.store'
+import { useCategoriesStore } from '../../store/categories.store'
 
-const API = 'http://127.0.0.1:8765'
+export const AnalyticsPanel = () => {
+  const { ramStats, focusScore } = useSystemStore()
+  const { categories } = useCategoriesStore()
 
-export const AnalyticsDashboard = () => {
-  const [activeTab, setActiveTab] = useState<'focus' | 'workflow'>('focus')
+  const totalApps   = categories.apps.length
+  const totalBrowsers = categories.browsers.length
+  const totalTabs   = categories.tabs.length
+  const totalFiles  = categories.files.length
+  const totalProc   = categories.processes.length
+  const totalWS     = categories.workspaces.length
 
-  const { data: predictions } = useQuery({
-    queryKey: ['predictions'],
-    queryFn: async () => {
-      const res = await fetch(`${API}/api/analytics/predictions`)
-      return res.json()
-    },
-    staleTime: 1000 * 60 * 5,
-  })
+  // Focus score display
+  const score = focusScore?.score ?? 0
+  const grade = focusScore?.grade ?? '—'
+  const scoreWidth = `${score}%`
+
+  const topApps = [...categories.apps, ...categories.browsers]
+    .sort((a, b) => (b.memoryMb || 0) - (a.memoryMb || 0))
+    .slice(0, 8)
 
   return (
-    <div className="flex flex-col h-full bg-surface-2">
-      {/* Dashboard Header */}
-      <div className="px-8 py-6 border-b border-border bg-surface">
-        <h1 className="text-2xl font-bold tracking-tight mb-1">Productivity Analytics</h1>
-        <p className="text-sm text-text-secondary">Powered by Wolfram Engine & Local AI</p>
-        
-        {/* Next Workspace Prediction */}
-        {predictions && (
-          <div className="mt-4 inline-flex items-center gap-3 bg-mint/5 border border-mint/20 rounded-full px-4 py-2">
-            <span className="text-[10px] uppercase tracking-widest text-mint/80 font-bold">Predicted Next</span>
-            <span className="text-sm font-medium text-white">{predictions.next_workspace}</span>
-            <span className="text-xs font-mono text-mint/60">{(predictions.confidence * 100).toFixed(0)}%</span>
+    <div style={{ maxWidth: 900 }}>
+      {/* Title */}
+      <div className="section-header" style={{ marginBottom: 28 }}>
+        <div className="section-title">Analytics</div>
+        <div className="section-line" />
+        <div className="section-subtitle">+ Live metrics</div>
+      </div>
+
+      {/* Top stats grid — Minimal White stats-grid pattern */}
+      <div className="analytics-stats-grid">
+        {[
+          { label: 'Apps',       value: totalApps },
+          { label: 'Browsers',   value: totalBrowsers },
+          { label: 'Tabs',       value: totalTabs },
+          { label: 'Files',      value: totalFiles },
+          { label: 'Processes',  value: totalProc },
+          { label: 'Workspaces', value: totalWS },
+        ].map((s) => (
+          <div key={s.label} className="analytics-stat-cell">
+            <div className="analytics-stat-diamond" />
+            <div className="analytics-stat-number">{s.value}</div>
+            <div className="analytics-stat-label">{s.label}</div>
           </div>
+        ))}
+      </div>
+
+      {/* RAM + Focus row */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 28 }}>
+        {/* RAM */}
+        <div className="focus-score-bar">
+          <div className="focus-score-label">RAM Usage</div>
+          {ramStats ? (
+            <>
+              <div className="focus-score-row">
+                <div className="focus-score-track" style={{ flex: 1 }}>
+                  <div className="focus-score-fill" style={{ width: `${ramStats.percent ?? 0}%` }} />
+                </div>
+                <div className="focus-score-grade" style={{ fontSize: 28 }}>
+                  {(ramStats.used_gb ?? 0).toFixed(1)}
+                  <span style={{ fontSize: 14, fontWeight: 300, color: 'var(--ink-3)' }}>
+                    /{(ramStats.total_gb ?? 0).toFixed(0)} GB
+                  </span>
+                </div>
+              </div>
+              {(ramStats.saved_gb ?? 0) > 0 && (
+                <div style={{ marginTop: 8, fontSize: 11, color: 'var(--accent)', fontWeight: 600, letterSpacing: 0.5 }}>
+                  + {ramStats.saved_gb?.toFixed(1)} GB recovered by AI
+                </div>
+              )}
+            </>
+          ) : (
+            <div style={{ color: 'var(--ink-4)', fontSize: 13 }}>Backend offline</div>
+          )}
+        </div>
+
+        {/* Focus Score */}
+        <div className="focus-score-bar">
+          <div className="focus-score-label">Cognitive Focus Score</div>
+          <div className="focus-score-row">
+            <div className="focus-score-track" style={{ flex: 1 }}>
+              <div className="focus-score-fill" style={{ width: scoreWidth }} />
+            </div>
+            <div className="focus-score-grade">{grade}</div>
+          </div>
+          <div style={{ marginTop: 8, fontSize: 11, color: 'var(--ink-3)' }}>
+            {focusScore ? `${focusScore.context_switches ?? 0} context switches` : 'Calculating...'}
+          </div>
+        </div>
+      </div>
+
+      {/* App Table */}
+      <div className="analytics-app-table">
+        <div className="analytics-table-header">
+          <div className="analytics-table-header-cell">Application</div>
+          <div className="analytics-table-header-cell">Memory</div>
+          <div className="analytics-table-header-cell">Status</div>
+          <div className="analytics-table-header-cell">Type</div>
+        </div>
+        {topApps.length === 0 ? (
+          <div style={{ padding: 24, textAlign: 'center', color: 'var(--ink-4)', fontSize: 12 }}>
+            No application data yet. Organize your workspace first.
+          </div>
+        ) : (
+          topApps.map((item) => (
+            <div key={item.id} className="analytics-table-row">
+              <div className="analytics-table-cell">{item.title}</div>
+              <div className="analytics-table-cell">{item.memoryMb ?? '—'} MB</div>
+              <div className="analytics-table-cell">
+                <span className={`analytics-status-dot ${item.isActive ? 'active' : 'idle'}`} />
+                {item.isActive ? 'Active' : 'Idle'}
+              </div>
+              <div className="analytics-table-cell">{item.categoryType}</div>
+            </div>
+          ))
         )}
       </div>
 
-      {/* Tabs */}
-      <div className="px-8 pt-6">
-        <div className="flex gap-1 bg-surface-3 p-1 rounded-lg w-fit mb-8">
-          <button
-            onClick={() => setActiveTab('focus')}
-            className={`px-6 py-2 rounded-md text-sm font-medium transition-all ${
-              activeTab === 'focus' 
-                ? 'bg-surface shadow text-white' 
-                : 'text-text-secondary hover:text-white'
-            }`}
-          >
-            Cognitive Focus
-          </button>
-          <button
-            onClick={() => setActiveTab('workflow')}
-            className={`px-6 py-2 rounded-md text-sm font-medium transition-all ${
-              activeTab === 'workflow' 
-                ? 'bg-surface shadow text-white' 
-                : 'text-text-secondary hover:text-white'
-            }`}
-          >
-            Workflow Heatmap
-          </button>
-        </div>
-      </div>
-
-      {/* Main Content Area */}
-      <div className="flex-1 px-8 pb-8 overflow-y-auto">
-        <div className="max-w-4xl mx-auto h-full min-h-[400px] flex items-center justify-center">
-          {activeTab === 'focus' ? <FocusScore /> : <WorkflowChart />}
-        </div>
+      {/* Export button */}
+      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <button
+          className="organize-btn"
+          style={{ fontSize: 10, padding: '10px 24px' }}
+          onClick={() => {
+            const data = JSON.stringify({ categories, ramStats, focusScore }, null, 2)
+            const blob = new Blob([data], { type: 'application/json' })
+            const url = URL.createObjectURL(blob)
+            const a = document.createElement('a')
+            a.href = url
+            a.download = `knemos-analytics-${Date.now()}.json`
+            a.click()
+          }}
+        >
+          Export Data
+        </button>
       </div>
     </div>
   )

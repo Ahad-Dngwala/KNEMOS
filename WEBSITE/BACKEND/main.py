@@ -1,4 +1,4 @@
-﻿# backend/main.py
+# backend/main.py
 """
 KnemOS FastAPI Backend  Entry Point
 Port: 8765
@@ -9,7 +9,7 @@ Run: uvicorn main:app --host 127.0.0.1 --port 8765 --reload
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
-from routers import workspace, memory, analytics, system
+from routers import workspace, memory, analytics, system, chat
 from scheduler import start_scheduler
 import uvicorn
 
@@ -93,6 +93,7 @@ app.include_router(workspace.router, prefix="/api/workspace", tags=["workspace"]
 app.include_router(memory.router,    prefix="/api/memory",    tags=["memory"])
 app.include_router(analytics.router, prefix="/api/analytics", tags=["analytics"])
 app.include_router(system.router,    prefix="/api/system",    tags=["system"])
+app.include_router(chat.router,      prefix="/api/chat",      tags=["chat"])
 
 
 #  WebSocket 

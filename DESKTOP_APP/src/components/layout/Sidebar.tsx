@@ -1,75 +1,85 @@
-import { WorkspaceList } from '../workspace/WorkspaceList'
-import { OrganizeButton } from '../workspace/OrganizeButton'
-import { MemorySearch } from '../memory/MemorySearch'
-import { RAMMonitor } from '../system/RAMMonitor'
+import { useUIStore, ActivePanel } from '../../store/ui.store'
+import { useCategoriesStore } from '../../store/categories.store'
 import { useSystemStore } from '../../store/system.store'
 
+interface NavItem {
+  id: ActivePanel
+  label: string
+  symbol: string
+}
+
+const NAV_ITEMS: NavItem[] = [
+  { id: 'categories', label: 'Categories',  symbol: '□' },
+  { id: 'chat',       label: 'AI Chat',     symbol: '○' },
+  { id: 'analytics',  label: 'Analytics',   symbol: '+' },
+  { id: 'settings',   label: 'Settings',    symbol: '—' },
+]
+
 export const Sidebar = () => {
-  const { deepWorkActive, setDeepWork, focusScore } = useSystemStore()
+  const { activePanel, setActivePanel, toggleDeepWork, deepWorkActive } = useUIStore()
+  const { categories } = useCategoriesStore()
+  const { ramStats } = useSystemStore()
+
+  const totalItems = Object.values(categories).reduce((sum, arr) => sum + arr.length, 0)
 
   return (
-    <div className="w-80 flex-shrink-0 flex flex-col bg-surface-2 border-r border-border h-full relative z-20 shadow-2xl overflow-hidden">
-
-      {/* Organize button */}
-      <div className="p-4 border-b border-border bg-surface/50 backdrop-blur-md sticky top-0 z-10">
-        <OrganizeButton />
+    <div className="sidebar">
+      {/* Section label */}
+      <div className="sidebar-header">
+        <span className="sidebar-section-title">Navigation</span>
       </div>
 
-      <div className="flex-1 overflow-y-auto custom-scrollbar">
-        {/* Workspace list */}
-        <div className="p-4">
-          <p className="text-[10px] text-text-secondary uppercase tracking-[0.2em] mb-4 px-1 font-bold">Semantic Workspaces</p>
-          <WorkspaceList />
-        </div>
+      {/* Nav items */}
+      <nav className="sidebar-nav">
+        {NAV_ITEMS.map((item) => (
+          <button
+            key={item.id}
+            className={`sidebar-nav-item ${activePanel === item.id ? 'active' : ''}`}
+            onClick={() => setActivePanel(item.id)}
+          >
+            <span className="sidebar-nav-symbol">{item.symbol}</span>
+            <span className="sidebar-nav-label">{item.label}</span>
+            {item.id === 'categories' && totalItems > 0 && (
+              <span className="sidebar-nav-badge">{totalItems}</span>
+            )}
+          </button>
+        ))}
 
-        {/* Memory Lane search */}
-        <div className="border-t border-border p-4 bg-surface/30">
-          <p className="text-[10px] text-text-secondary uppercase tracking-[0.2em] mb-3 px-1 font-bold text-mint/80">Memory Lane</p>
-          <div className="h-64">
-            <MemorySearch />
-          </div>
-        </div>
-      </div>
+        <div className="sidebar-divider" />
 
-      {/* Fixed bottom section */}
-      <div className="bg-surface-2 border-t border-border mt-auto shadow-[0_-10px_20px_rgba(0,0,0,0.5)] z-10 relative">
-        {/* Focus Score Mini */}
-        <div className="px-4 py-3 border-b border-border">
-          <div className="flex items-center justify-between mb-1.5">
-            <p className="text-[10px] text-text-secondary uppercase tracking-widest">Cognitive Focus</p>
-            <span className="text-xs font-mono text-white font-bold">{focusScore?.score ?? '--'}</span>
-          </div>
-          <div className="h-1 bg-surface-3 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-mint transition-all duration-1000 ease-out"
-              style={{ width: `${focusScore?.score ?? 0}%` }}
-            />
-          </div>
-        </div>
+        {/* Deep Work Mode */}
+        <button
+          className={`sidebar-nav-item ${deepWorkActive ? 'active' : ''}`}
+          onClick={toggleDeepWork}
+          style={deepWorkActive ? { background: '#000', color: '#fff' } : {}}
+        >
+          <span className="sidebar-nav-symbol">◇</span>
+          <span className="sidebar-nav-label">Deep Work</span>
+          {deepWorkActive && (
+            <span className="sidebar-nav-badge" style={{ background: 'rgba(255,255,255,0.2)', color: '#fff' }}>
+              ON
+            </span>
+          )}
+        </button>
+      </nav>
 
-        {/* RAM Monitor */}
-        <RAMMonitor />
+      {/* Geometric decoration */}
+      <div className="sidebar-decoration" />
 
-        {/* Deep Work Toggle */}
-        <div className="p-4 border-t border-border bg-surface/50">
-          <div className="flex items-center justify-between">
-            <div className="flex flex-col">
-              <span className="text-sm font-medium text-white">Deep Work</span>
-              <span className="text-[10px] text-text-secondary">Dim unrelated contexts</span>
+      {/* Footer with RAM */}
+      <div className="sidebar-footer">
+        {ramStats ? (
+          <div>
+            <div className="sidebar-backend-status">
+              RAM: {ramStats.used_gb?.toFixed(1) ?? '?'} / {ramStats.total_gb?.toFixed(1) ?? '?'} GB
             </div>
-            
-            <button
-              onClick={() => setDeepWork(!deepWorkActive)}
-              className={`relative w-12 h-6 rounded-full transition-colors focus-ring
-                ${deepWorkActive ? 'bg-mint' : 'bg-surface-3 border border-border'}`}
-            >
-              <span 
-                className={`absolute top-0.5 w-5 h-5 bg-white rounded-full transition-transform shadow-md
-                  ${deepWorkActive ? 'left-6.5' : 'left-0.5'}`} 
-              />
-            </button>
+            <div className="sidebar-backend-status" style={{ marginTop: 4, color: 'var(--accent)' }}>
+              {ramStats.percent?.toFixed(0) ?? 0}% used
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="sidebar-backend-status">Backend offline</div>
+        )}
       </div>
     </div>
   )

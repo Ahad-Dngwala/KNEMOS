@@ -1,59 +1,67 @@
-import { motion, AnimatePresence } from 'framer-motion'
+import { useUIStore } from '../../store/ui.store'
 import { useSystemStore } from '../../store/system.store'
-import { useWorkspaceStore } from '../../store/workspace.store'
 
 export const DeepWorkOverlay = () => {
-  const { deepWorkActive, setDeepWork } = useSystemStore()
-  const { activeWorkspaceId, workspaces } = useWorkspaceStore()
-  
-  const activeWorkspace = workspaces.find(w => w.id === activeWorkspaceId)
+  const { toggleDeepWork } = useUIStore()
+  const { focusScore } = useSystemStore()
+
+  const grade = focusScore?.grade || '—'
 
   return (
-    <AnimatePresence>
-      {deepWorkActive && (
-        <motion.div
-          initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
-          animate={{ opacity: 1, backdropFilter: 'blur(16px)' }}
-          exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
-          transition={{ duration: 0.5 }}
-          className="fixed inset-0 z-40 bg-surface/80 flex flex-col items-center justify-center border-4 border-mint/20"
-        >
-          {/* Subtle animated background elements */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-mint/5 rounded-full blur-[100px] animate-pulse-mint" />
-            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-[100px] animate-pulse-mint" style={{ animationDelay: '1s' }} />
+    <div className="modal-backdrop" style={{ zIndex: 9999 }}>
+      {/* Absolute fullscreen blocking layer */}
+      <div 
+        style={{
+          position: 'absolute', inset: 0, 
+          background: 'var(--ink)', 
+          color: '#fff',
+          display: 'flex', flexDirection: 'column',
+          alignItems: 'center', justifyContent: 'center',
+          animation: 'fadeIn 0.4s ease'
+        }}
+      >
+        {/* Geometric focus animation */}
+        <div style={{ position: 'relative', width: 200, height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 60 }}>
+          <div style={{ position: 'absolute', width: 100, height: 100, border: '1px solid rgba(255,255,255,0.1)', borderRadius: '50%', animation: 'expandContract 10s ease-in-out infinite' }} />
+          <div style={{ position: 'absolute', width: 150, height: 150, border: '1px solid rgba(255,255,255,0.05)', borderRadius: '50%', animation: 'expandContract 14s ease-in-out infinite reverse' }} />
+          <div style={{ fontSize: 64, fontWeight: 100 }}>◇</div>
+        </div>
+
+        <div style={{ fontSize: 14, letterSpacing: 6, textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', marginBottom: 12 }}>
+          Focus Mode Active
+        </div>
+        
+        <div style={{ fontSize: 32, fontWeight: 300, marginBottom: 40 }}>
+          Background Distractions Minimized
+        </div>
+
+        <div style={{ display: 'flex', gap: 40, marginBottom: 60, textAlign: 'center' }}>
+          <div>
+            <div style={{ fontSize: 40, fontWeight: 100 }}>{grade}</div>
+            <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)' }}>Focus Grade</div>
           </div>
+          <div style={{ width: 1, background: 'rgba(255,255,255,0.1)' }} />
+          <div>
+            <div style={{ fontSize: 40, fontWeight: 100, color: 'var(--accent)' }}>Active</div>
+            <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)' }}>Auto-Minimize</div>
+          </div>
+        </div>
 
-          <motion.div 
-            initial={{ y: 20, scale: 0.95 }}
-            animate={{ y: 0, scale: 1 }}
-            className="relative z-10 text-center max-w-lg mx-auto p-8 glass-card rounded-2xl border-mint/30 shadow-[0_0_40px_rgba(0,200,150,0.1)]"
-          >
-            <div className="w-16 h-16 mx-auto mb-6 rounded-full border-2 border-mint flex items-center justify-center animate-glow-mint">
-              <svg className="w-8 h-8 text-mint" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>
-            </div>
-            
-            <h2 className="text-3xl font-bold mb-2 tracking-tight text-white">Deep Work Mode</h2>
-            <p className="text-text-secondary mb-6 text-sm">
-              All non-essential applications are muted.
-              {activeWorkspace && (
-                <span className="block mt-2">
-                  Focusing on <strong className="text-mint">{activeWorkspace.name}</strong>
-                </span>
-              )}
-            </p>
-
-            <button
-              onClick={() => setDeepWork(false)}
-              className="px-6 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-sm font-medium transition-colors focus-ring"
-            >
-              Exit Focus Mode
-            </button>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        <button 
+          onClick={toggleDeepWork}
+          style={{
+            padding: '12px 32px',
+            background: '#fff', color: 'var(--ink)',
+            border: 'none', borderRadius: 99,
+            fontSize: 12, fontWeight: 600, letterSpacing: 1, textTransform: 'uppercase',
+            cursor: 'pointer', transition: 'all 0.2s'
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+        >
+          Exit Deep Work
+        </button>
+      </div>
+    </div>
   )
 }

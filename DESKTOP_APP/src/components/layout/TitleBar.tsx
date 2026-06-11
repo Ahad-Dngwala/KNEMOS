@@ -1,39 +1,58 @@
-﻿import { getCurrentWindow } from '@tauri-apps/api/window'
+import { getCurrentWindow } from '@tauri-apps/api/window'
+import { useUIStore } from '../../store/ui.store'
+import { useSystemStore } from '../../store/system.store'
+
+const PANEL_LABELS: Record<string, string> = {
+  categories: 'Workspace Overview',
+  chat: 'AI Assistant',
+  analytics: 'Analytics',
+  settings: 'Settings',
+}
 
 export const TitleBar = () => {
-  const win = getCurrentWindow()
+  const { activePanel } = useUIStore()
+  const { ramStats } = useSystemStore()
   
+  const isTauri = typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window
+  const appWindow = isTauri ? getCurrentWindow() : null
+
+  const isConnected = ramStats !== null
+
+  const handleClose = () => appWindow?.close()
+  const handleMin = () => appWindow?.minimize()
+  const handleMax = () => appWindow?.toggleMaximize()
+
   return (
-    <div
-      data-tauri-drag-region
-      className="h-9 flex items-center justify-between px-4 bg-surface border-b border-border flex-shrink-0 select-none z-50 relative"
-    >
-      <div className="flex items-center gap-2 pointer-events-none">
-        <div className="w-5 h-5 bg-white rounded-sm flex items-center justify-center">
-          <span className="text-black text-[9px] font-black">K</span>
+    <div className="titlebar">
+      <div className="titlebar-left">
+        <div className="titlebar-logo">
+          <span className="titlebar-logo-text">KNEMOS</span>
         </div>
-        <span className="text-xs font-bold tracking-[0.2em]">KnemOS</span>
+        <span className="titlebar-section-label">
+          {PANEL_LABELS[activePanel] || 'KnemOS'}
+        </span>
       </div>
 
-      <div className="flex items-center gap-1">
-        <button 
-          onClick={() => win.minimize()} 
-          className="w-7 h-7 hover:bg-border flex items-center justify-center text-text-secondary hover:text-white rounded text-sm transition-colors"
-        >
-          
-        </button>
-        <button 
-          onClick={() => win.toggleMaximize()} 
-          className="w-7 h-7 hover:bg-border flex items-center justify-center text-text-secondary hover:text-white rounded text-sm transition-colors"
-        >
-          
-        </button>
-        <button 
-          onClick={() => win.close()} 
-          className="w-7 h-7 hover:bg-danger/20 flex items-center justify-center text-text-secondary hover:text-danger rounded text-sm transition-colors"
-        >
-          ×
-        </button>
+      <div className="titlebar-right" style={{ WebkitAppRegion: 'no-drag' } as any}>
+        {/* Backend status */}
+        <div className="titlebar-status">
+          <div className={`titlebar-status-dot ${isConnected ? 'connected' : ''}`} />
+          {isConnected ? 'Connected' : 'Offline'}
+        </div>
+
+        {/* RAM saved indicator */}
+        {ramStats && ramStats.saved_gb > 0 && (
+          <div className="titlebar-status" style={{ color: 'var(--accent)', borderColor: 'var(--accent-light)' }}>
+            +{ramStats.saved_gb.toFixed(1)} GB saved
+          </div>
+        )}
+
+        {/* Window controls */}
+        <div className="win-controls">
+          <button className="win-btn min" onClick={handleMin} title="Minimize" />
+          <button className="win-btn max" onClick={handleMax} title="Maximize" />
+          <button className="win-btn close" onClick={handleClose} title="Close" />
+        </div>
       </div>
     </div>
   )

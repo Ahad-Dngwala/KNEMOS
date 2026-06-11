@@ -20,8 +20,8 @@ interface SystemStore {
   ramStats: RAMStats | null
   focusScore: FocusScore | null
   deepWorkActive: boolean
-  setRAMStats: (s: RAMStats) => void
-  setFocusScore: (s: FocusScore) => void
+  setRAMStats: (s: RAMStats | null) => void
+  setFocusScore: (s: FocusScore | null) => void
   setDeepWork: (v: boolean) => void
 }
 
