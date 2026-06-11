@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KnemOS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="popup-root">
+
+    <!-- ── HEADER ── -->
+    <div class="header">
+      <div class="logo">
+        <img src="../icons/icon32.png" alt="KnemOS" class="logo-img" />
+        <span class="logo-text">KnemOS</span>
+      </div>
+      <div class="header-actions">
+        <div class="status-dot" id="statusDot" title="Backend status"></div>
+        <button class="icon-btn" id="tabsBtn" title="View open tabs">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1" y="3" width="13" height="2.5" rx="1" fill="currentColor"/><rect x="1" y="7" width="13" height="2.5" rx="1" fill="currentColor" opacity=".6"/><rect x="1" y="11" width="8" height="2.5" rx="1" fill="currentColor" opacity=".3"/></svg>
+        </button>
+        <button class="icon-btn" id="settingsBtn" title="Theme settings">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 9.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" fill="currentColor"/><path d="M6.2 1.5h2.6l.4 1.6a5 5 0 0 1 1.2.7l1.6-.5 1.3 2.2-1.2 1.1v1.4l1.2 1-1.3 2.3-1.6-.5a5 5 0 0 1-1.2.7l-.4 1.5H6.2l-.4-1.5a5 5 0 0 1-1.2-.7l-1.6.5L1.7 8.5l1.2-1V6.1L1.7 5l1.3-2.2 1.6.5a5 5 0 0 1 1.2-.7l.4-1.6Z" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── VIEW: STATUS (default) ── -->
+    <div class="view" id="viewStatus">
+
+      <!-- Status card -->
+      <div class="status-card" id="statusCard">
+        <div class="status-card-left">
+          <div class="status-indicator" id="statusIndicator">
+            <div class="status-ring"></div>
+            <div class="status-core"></div>
+          </div>
+          <div class="status-info">
+            <div class="status-label">BACKEND</div>
+            <div class="status-value" id="statusText">Checking...</div>
+          </div>
+        </div>
+        <div class="status-badge" id="statusBadge">—</div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-num" id="tabCount">—</div>
+          <div class="stat-label">Tabs tracked</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="lastSyncText">—</div>
+          <div class="stat-label">Last sync</div>
+        </div>
+      </div>
+
+      <!-- Sync button -->
+      <button class="primary-btn" id="syncBtn">
+        <span class="btn-icon" id="syncIcon">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M11.5 6.5A5 5 0 1 1 6.5 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M9.5 1.5 11.5 3.5 9.5 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span id="syncBtnText">Sync Now</span>
+      </button>
+
+      <!-- Offline notice (when disconnected) -->
+      <div class="offline-notice hidden" id="offlineNotice">
+        <div class="offline-icon">⚡</div>
+        <div class="offline-body">
+          <div class="offline-title">Running in offline mode</div>
+          <div class="offline-desc">Tabs are tracked locally. Install the KnemOS desktop app for AI workspace clustering.</div>
+        </div>
+      </div>
+
+      <!-- Connected info -->
+      <div class="connected-info hidden" id="connectedInfo">
+        <div class="connected-icon">✦</div>
+        <div class="connected-desc">Tab context is syncing to KnemOS AI engine. Open the desktop app to view your workspaces.</div>
+      </div>
+
+      <!-- Install CTA (disconnected) -->
+      <div class="install-cta hidden" id="installCta">
+        <a href="https://knemos.vercel.app/download" target="_blank" class="install-link">
+          Download Desktop App →
+        </a>
+      </div>
+
+    </div>
+
+    <!-- ── VIEW: TABS ── -->
+    <div class="view hidden" id="viewTabs">
+      <div class="view-header">
+        <button class="icon-btn back-btn" id="tabsBackBtn" title="Back to home">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="view-title">Open Tabs</span>
+        <span class="tabs-total" id="tabsTotal">0</span>
+      </div>
+      <div class="tabs-list" id="tabsList">
+        <div class="tabs-empty" id="tabsEmpty">No tabs to display</div>
+      </div>
+    </div>
+
+    <!-- ── VIEW: SETTINGS ── -->
+    <div class="view hidden" id="viewSettings">
+      <div class="view-header">
+        <button class="icon-btn back-btn" id="settingsBackBtn" title="Back to home">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="view-title">Theme Settings</span>
+      </div>
+
+      <div class="settings-section">
+        <div class="setting-label">COLOR MODE</div>
+        <div class="mode-toggle">
+          <button class="mode-btn active" id="modeLight" data-mode="light">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="2.5" fill="currentColor"/><path d="M6 1v1M6 10v1M1 6h1M10 6h1M2.5 2.5l.7.7M8.8 8.8l.7.7M2.5 9.5l.7-.7M8.8 3.2l.7-.7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            Light
+          </button>
+          <button class="mode-btn" id="modeDark" data-mode="dark">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M10 6.5a4.5 4.5 0 1 1-5-4.46A3.5 3.5 0 0 0 10 6.5Z" fill="currentColor"/></svg>
+            Dark
+          </button>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="setting-label">ACCENT COLOR</div>
+        <div class="color-presets" id="colorPresets">
+          <button class="color-swatch active" data-color="#000000" style="background:#000000" title="Black"></button>
+          <button class="color-swatch" data-color="#2563EB" style="background:#2563EB" title="Blue"></button>
+          <button class="color-swatch" data-color="#7C3AED" style="background:#7C3AED" title="Violet"></button>
+          <button class="color-swatch" data-color="#DC2626" style="background:#DC2626" title="Red"></button>
+          <button class="color-swatch" data-color="#059669" style="background:#059669" title="Green"></button>
+          <button class="color-swatch" data-color="#D97706" style="background:#D97706" title="Amber"></button>
+          <button class="color-swatch" data-color="#DB2777" style="background:#DB2777" title="Pink"></button>
+          <label class="color-swatch custom-color-label" title="Custom color">
+            <input type="color" id="customColor" value="#000000" />
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </label>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="setting-label">PREVIEW</div>
+        <div class="theme-preview">
+          <div class="preview-badge" id="previewBadge">Connected</div>
+          <div class="preview-text">KnemOS is active</div>
+        </div>
+      </div>
+
+      <button class="primary-btn" id="saveThemeBtn">Apply Theme</button>
+    </div>
+
+    <!-- ── FOOTER ── -->
+    <div class="footer">
+      <span class="footer-brand">KnemOS</span>
+      <span class="footer-sep">·</span>
+      <span class="footer-ver">v1.0.0</span>
+    </div>
+
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
