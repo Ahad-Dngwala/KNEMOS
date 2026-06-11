@@ -1,0 +1,94 @@
+﻿@import "tailwindcss";
+
+/*  KnemOS Design System  */
+@theme {
+  --color-mint: #00C896;
+  --color-mint-dark: #00A87E;
+  --color-mint-dim: rgba(0, 200, 150, 0.12);
+  --color-surface: #0A0A0A;
+  --color-surface-2: #0D0D0D;
+  --color-surface-3: #121212;
+  --color-border: #1A1A1A;
+  --color-border-2: #222222;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #888888;
+  --color-text-dim: #444444;
+  --color-danger: #FF4B4B;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/*  Base Reset  */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  overflow: hidden;
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  user-select: none;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #2A2A2A; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #3A3A3A; }
+
+/* Allow text selection in specific areas */
+input, textarea, .selectable { user-select: text; }
+
+/*  Animations  */
+@keyframes pulse-mint {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes glow-mint {
+  0%, 100% { box-shadow: 0 0 8px rgba(0, 200, 150, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(0, 200, 150, 0.6); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-pulse-mint { animation: pulse-mint 2s ease-in-out infinite; }
+.animate-glow-mint  { animation: glow-mint 2s ease-in-out infinite; }
+.animate-slide-up   { animation: slide-up 0.3s ease-out forwards; }
+.animate-fade-in    { animation: fade-in 0.2s ease-out forwards; }
+
+/*  Gradient text utility  */
+.text-gradient-mint {
+  background: linear-gradient(135deg, #00C896 0%, #00F5C4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/*  Glass card  */
+.glass-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--color-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/*  Focus ring  */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--color-mint);
+  outline-offset: 2px;
+}

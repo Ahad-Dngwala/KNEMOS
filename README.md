@@ -1,6 +1,6 @@
-# KnemOS
+﻿# KnemOS
 
-> **K**nowledge · **nem**onics · **OS** — The Cognitive Layer for Your Desktop
+> **K**nowledge · **nem**onics · **OS**  The Cognitive Layer for Your Desktop
 
 ![KnemOS](https://img.shields.io/badge/KnemOS-v1.0--alpha-000000?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PC9zdmc+)
 ![Track](https://img.shields.io/badge/OSC_AI_Build_1.0-Future_of_Productivity-00C896?style=for-the-badge)
@@ -9,12 +9,12 @@
 ![Stack](https://img.shields.io/badge/Stack-Tauri_+_FastAPI_+_Wolfram-000000?style=for-the-badge)
 
 ```
-  ██╗  ██╗███╗   ██╗███████╗███╗   ███╗ ██████╗ ███████╗
-  ██║ ██╔╝████╗  ██║██╔════╝████╗ ████║██╔═══██╗██╔════╝
-  █████╔╝ ██╔██╗ ██║█████╗  ██╔████╔██║██║   ██║███████╗
-  ██╔═██╗ ██║╚██╗██║██╔══╝  ██║╚██╔╝██║██║   ██║╚════██║
-  ██║  ██╗██║ ╚████║███████╗██║ ╚═╝ ██║╚██████╔╝███████║
-  ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚══════╝
+            
+      
+         
+        
+       
+             
 
   AI-Powered Semantic Workspace Operating System
 ```
@@ -24,7 +24,7 @@
 ## What is KnemOS?
 
 Modern operating systems were designed **30 years ago** around files and folders.  
-Today, knowledge workers live across 40+ browser tabs, multiple IDEs, local files, terminal sessions, and messaging apps — simultaneously.
+Today, knowledge workers live across 40+ browser tabs, multiple IDEs, local files, terminal sessions, and messaging apps  simultaneously.
 
 **KnemOS** is a local-first AI productivity system that acts as a cognitive layer between the user and their computer. It automatically clusters your entire digital workspace into intelligent semantic groups, makes your screen history searchable in natural language, and measures your cognitive performance using Wolfram Language analytics.
 
@@ -48,17 +48,17 @@ Today, knowledge workers live across 40+ browser tabs, multiple IDEs, local file
 KnemOS ships as three connected systems:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                     KnemOS Ecosystem                         │
-│                                                             │
-│  ┌─────────────┐    ┌─────────────────┐    ┌────────────┐  │
-│  │   Website   │    │  Desktop App    │    │  Browser   │  │
-│  │             │    │  (Core Engine)  │    │ Extension  │  │
-│  │  Next.js 15 │◄──►│  Tauri v2       │◄──►│ Chrome MV3 │  │
-│  │  Vercel     │    │  FastAPI        │    │            │  │
-│  │  Supabase   │    │  Local AI       │    │ Tab access │  │
-│  └─────────────┘    └─────────────────┘    └────────────┘  │
-└─────────────────────────────────────────────────────────────┘
+
+                     KnemOS Ecosystem                         
+                                                             
+            
+     Website         Desktop App          Browser     
+                     (Core Engine)       Extension    
+    Next.js 15   Tauri v2        Chrome MV3   
+    Vercel           FastAPI                          
+    Supabase         Local AI            Tab access   
+            
+
 ```
 <img width="1191" height="714" alt="image_8b4bec0f" src="https://github.com/user-attachments/assets/fc047762-4d8b-4995-952a-0988e2b7da0e" />
 
@@ -67,19 +67,19 @@ KnemOS ships as three connected systems:
 ## Core Features
 
 ### 01 · Semantic Workspace Clustering
-AI automatically groups your browser tabs, VS Code windows, terminal sessions, and local folders into named semantic workspaces — no manual tagging, no folder creation.
+AI automatically groups your browser tabs, VS Code windows, terminal sessions, and local folders into named semantic workspaces  no manual tagging, no folder creation.
 
 ```
 BEFORE                         AFTER
-──────                         ─────
-github.com/VendorBridge    →   ● VendorBridge Dev
-auth.py — VS Code          →     GitHub · FastAPI · auth.py · Terminal
-FastAPI docs               →
-Terminal #3                →   ● Research Workspace
-Stack Overflow             →     Docs · Stack Overflow · Bookmarks
-YouTube (Tab #27)          →
-Gmail — 4 tabs             →   ● Communication
-Slack                      →     Slack · Gmail · Notifications
+                         
+github.com/VendorBridge        VendorBridge Dev
+auth.py  VS Code               GitHub · FastAPI · auth.py · Terminal
+FastAPI docs               
+Terminal #3                    Research Workspace
+Stack Overflow                  Docs · Stack Overflow · Bookmarks
+YouTube (Tab #27)          
+Gmail  4 tabs                 Communication
+Slack                           Slack · Gmail · Notifications
 ```
 
 ### 02 · Memory Lane
@@ -87,15 +87,15 @@ Periodically captures screenshots, runs OCR, generates embeddings, and indexes e
 
 ```
 Search: "that React auth bug from this morning"
-      ↓
+      
 Returns: screenshot · timestamp · full workspace state
 ```
 
 **Pipeline:**
 ```
-Screenshot (mss) → OCR (Tesseract) → Embed (mxbai-embed-large)
-                                           ↓
-Natural language query ← ChromaDB ← Vector index
+Screenshot (mss)  OCR (Tesseract)  Embed (mxbai-embed-large)
+                                           
+Natural language query  ChromaDB  Vector index
 ```
 
 ### 03 · Deep Work Mode
@@ -110,7 +110,7 @@ Example output:  AI recovered 4.3 GB RAM · 12 tabs hibernated
 
 ### 05 · Predictive Productivity Analytics (Wolfram Language)
 Workspace activity data is piped through Wolfram Language to generate:
-- **Cognitive Focus Score** (daily 0–100 rating)
+- **Cognitive Focus Score** (daily 0100 rating)
 - **Workflow Heatmap** (peak productivity time-of-day)
 - **Context-Switch Frequency Graph**
 - **Next-Workspace Prediction**
@@ -123,32 +123,32 @@ Export any semantic workspace as a structured Markdown file including all links,
 ## AI Pipeline
 
 ```
-Step 1 — Data Collection
+Step 1  Data Collection
   psutil (processes) + pywin32 (window titles) + watchdog (files)
   + mss (screenshots) + Chrome Extension (tab URLs)
-          ↓
-Step 2 — Semantic Embeddings
+          
+Step 2  Semantic Embeddings
   mxbai-embed-large (via Ollama)
-  All textual metadata → high-fidelity semantic vectors
-          ↓
-Step 3 — Clustering
+  All textual metadata  high-fidelity semantic vectors
+          
+Step 3  Clustering
   HDBSCAN
-  Semantically related resources → workspace clusters
-          ↓
-Step 4 — Workspace Naming
+  Semantically related resources  workspace clusters
+          
+Step 4  Workspace Naming
   Ollama + Qwen2.5-7B (standard) · Qwen2.5-3B (low-end devices)
-  Clusters → intelligent workspace labels
-          ↓
-Step 5 — Memory Indexing
+  Clusters  intelligent workspace labels
+          
+Step 5  Memory Indexing
   Tesseract OCR + ChromaDB
-  Screenshots → searchable vector memory
-          ↓
-Step 6 — Workflow Analytics
+  Screenshots  searchable vector memory
+          
+Step 6  Workflow Analytics
   Wolfram Language (wolframclient)
-  Clusters + time data → Cognitive Focus Score + predictions
+  Clusters + time data  Cognitive Focus Score + predictions
 ```
 
-> All processing runs on `127.0.0.1:8765` — no data leaves your machine.
+> All processing runs on `127.0.0.1:8765`  no data leaves your machine.
 
 ---
 
@@ -193,7 +193,7 @@ KnemOS auto-detects available system memory at startup and selects the appropria
 
 ```mermaid
 flowchart TD
-    subgraph INPUT["🖥️ Data Collection Layer"]
+    subgraph INPUT[" Data Collection Layer"]
         A1[pywin32\nWindow Titles]
         A2[psutil\nProcesses & RAM]
         A3[watchdog\nFile System Events]
@@ -201,11 +201,11 @@ flowchart TD
         A5[Chrome Extension MV3\nTab URLs & Titles]
     end
 
-    subgraph EMBED["🧠 Semantic Embedding Layer"]
+    subgraph EMBED[" Semantic Embedding Layer"]
         B1["mxbai-embed-large\n(via Ollama)\nHigh-fidelity 1024-dim vectors"]
     end
 
-    subgraph CLUSTER["🔗 Clustering & Naming Layer"]
+    subgraph CLUSTER[" Clustering & Naming Layer"]
         C1[HDBSCAN\nDensity-Based Clustering]
         C2{"Device Tier\nDetection"}
         C3["Qwen2.5-7B\n(Standard Devices)"]
@@ -213,21 +213,21 @@ flowchart TD
         C5[Semantic Workspace\nLabels + Groups]
     end
 
-    subgraph MEMORY["💾 Memory Lane Layer"]
+    subgraph MEMORY[" Memory Lane Layer"]
         D1[Tesseract OCR\nText Extraction]
         D2[ChromaDB\nVector Index]
         D3[Natural Language\nMemory Search]
     end
 
-    subgraph ANALYTICS["📊 Analytics Layer"]
+    subgraph ANALYTICS[" Analytics Layer"]
         E1[Wolfram Language\nwolframclient]
-        E2[Cognitive Focus\nScore 0–100]
+        E2[Cognitive Focus\nScore 0100]
         E3[Workflow\nHeatmap]
         E4[Context-Switch\nFrequency Graph]
         E5[Next-Workspace\nPrediction]
     end
 
-    subgraph BACKEND["⚙️ FastAPI Backend — 127.0.0.1:8765"]
+    subgraph BACKEND[" FastAPI Backend  127.0.0.1:8765"]
         F1[workspace.py\nClustering Endpoints]
         F2[memory.py\nMemory Lane Endpoints]
         F3[analytics.py\nWolfram Endpoints]
@@ -235,7 +235,7 @@ flowchart TD
         F5[WebSocket /ws\nReal-time Events]
     end
 
-    subgraph FRONTEND["🖼️ Desktop UI — Tauri v2 + React 18"]
+    subgraph FRONTEND[" Desktop UI  Tauri v2 + React 18"]
         G1[Workspace\nSidebar]
         G2[Memory Lane\nSearch UI]
         G3[Analytics\nDashboard]
@@ -243,26 +243,26 @@ flowchart TD
         G5[Deep Work\nOverlay]
     end
 
-    subgraph CLOUD["☁️ Cloud Layer (Auth Only)"]
+    subgraph CLOUD[" Cloud Layer (Auth Only)"]
         H1[Supabase Auth]
-        H2[Next.js 15\nWebsite — Vercel]
+        H2[Next.js 15\nWebsite  Vercel]
     end
 
-    %% Data flow: Collection → Embedding
+    %% Data flow: Collection  Embedding
     A1 & A2 & A3 & A5 -->|"Textual metadata"| B1
     A4 -->|"Screenshots"| D1
 
-    %% Embedding → Clustering
+    %% Embedding  Clustering
     B1 -->|"Semantic vectors"| C1
 
-    %% Clustering → Naming
+    %% Clustering  Naming
     C1 -->|"Clusters"| C2
-    C2 -->|"≥6 GB VRAM"| C3
+    C2 -->|"6 GB VRAM"| C3
     C2 -->|"<6 GB VRAM"| C4
     C3 & C4 -->|"Named workspaces"| C5
 
     %% Memory pipeline
-    D1 -->|"OCR text → embed"| B1
+    D1 -->|"OCR text  embed"| B1
     B1 -->|"Vectors"| D2
     D2 -->|"ANN search"| D3
 
@@ -277,7 +277,7 @@ flowchart TD
     A2 -->|"RAM/CPU stats"| F1
     F4 -->|"Scheduled scans"| A1 & A2 & A3 & A4
 
-    %% WebSocket → Frontend
+    %% WebSocket  Frontend
     F1 & F2 & F3 -->|"REST API"| FRONTEND
     F5 -->|"Live push events"| G1
 
@@ -324,8 +324,8 @@ flowchart TD
 Windows 10/11 (MVP scope)
 Node.js >= 18
 Python 3.11
-Rust (for Tauri) — https://rustup.rs
-Ollama — https://ollama.ai
+Rust (for Tauri)  https://rustup.rs
+Ollama  https://ollama.ai
 
 # Ollama models
 ollama pull mxbai-embed-large          # Embedding model
@@ -364,7 +364,7 @@ cd ../website
 npm install
 ```
 
-### Running — Development
+### Running  Development
 
 ```bash
 # Terminal 1: Start AI Backend
@@ -380,7 +380,7 @@ cd website
 npm run dev
 ```
 
-### Running — Production Build
+### Running  Production Build
 
 ```bash
 # Build desktop app
@@ -398,54 +398,54 @@ npm run build
 
 ```
 KnemOS/
-│
-├── website/                    # Next.js 15 landing page
-│   ├── app/
-│   │   ├── page.tsx            # Landing page
-│   │   ├── auth/               # Supabase auth
-│   │   └── download/           # App download page
-│   ├── components/
-│   └── public/
-│
-├── app/                        # Tauri desktop application
-│   ├── src/                    # React 18 frontend
-│   │   ├── components/
-│   │   │   ├── WorkspaceSidebar.tsx
-│   │   │   ├── MemoryLane.tsx
-│   │   │   ├── AnalyticsDashboard.tsx
-│   │   │   ├── RAMMonitor.tsx
-│   │   │   └── DeepWorkOverlay.tsx
-│   │   ├── store/              # Zustand state
-│   │   └── hooks/
-│   └── src-tauri/              # Rust backend shell
-│       ├── src/
-│       │   └── main.rs
-│       └── tauri.conf.json
-│
-├── backend/                    # FastAPI AI backend
-│   ├── main.py                 # FastAPI entry point
-│   ├── routers/
-│   │   ├── workspace.py        # Clustering endpoints
-│   │   ├── memory.py           # Memory Lane endpoints
-│   │   └── analytics.py        # Wolfram analytics
-│   ├── services/
-│   │   ├── embedder.py         # mxbai-embed-large (Ollama)
-│   │   ├── clusterer.py        # HDBSCAN
-│   │   ├── namer.py            # Ollama + Qwen2.5-7B / Qwen2.5-3B
-│   │   ├── memory_indexer.py   # ChromaDB + OCR
-│   │   ├── wolfram_analytics.py
-│   │   └── system_monitor.py   # pywin32 + psutil
-│   ├── scheduler.py            # APScheduler tasks
-│   └── requirements.txt
-│
-├── extension/                  # Chrome Extension MV3
-│   ├── manifest.json
-│   ├── background.js
-│   ├── content.js
-│   └── native_messaging/
-│       └── knemos_host.py
-│
-└── README.md
+
+ website/                    # Next.js 15 landing page
+    app/
+       page.tsx            # Landing page
+       auth/               # Supabase auth
+       download/           # App download page
+    components/
+    public/
+
+ app/                        # Tauri desktop application
+    src/                    # React 18 frontend
+       components/
+          WorkspaceSidebar.tsx
+          MemoryLane.tsx
+          AnalyticsDashboard.tsx
+          RAMMonitor.tsx
+          DeepWorkOverlay.tsx
+       store/              # Zustand state
+       hooks/
+    src-tauri/              # Rust backend shell
+        src/
+           main.rs
+        tauri.conf.json
+
+ backend/                    # FastAPI AI backend
+    main.py                 # FastAPI entry point
+    routers/
+       workspace.py        # Clustering endpoints
+       memory.py           # Memory Lane endpoints
+       analytics.py        # Wolfram analytics
+    services/
+       embedder.py         # mxbai-embed-large (Ollama)
+       clusterer.py        # HDBSCAN
+       namer.py            # Ollama + Qwen2.5-7B / Qwen2.5-3B
+       memory_indexer.py   # ChromaDB + OCR
+       wolfram_analytics.py
+       system_monitor.py   # pywin32 + psutil
+    scheduler.py            # APScheduler tasks
+    requirements.txt
+
+ extension/                  # Chrome Extension MV3
+    manifest.json
+    background.js
+    content.js
+    native_messaging/
+        knemos_host.py
+
+ README.md
 ```
 
 ---
@@ -477,7 +477,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 
 ## API Reference
 
-### Backend — Core Endpoints
+### Backend  Core Endpoints
 
 ```
 POST /api/workspace/organize        Trigger semantic clustering
@@ -526,22 +526,22 @@ KnemOS follows a strict **local-first privacy architecture**.
 
 | Feature | Workona | OneTab | Arc Browser | Rewind.ai | **KnemOS** |
 |---------|---------|--------|-------------|-----------|------------|
-| Semantic AI clustering | ✗ | ✗ | Manual | ✗ | **✓** |
-| Cross-app workspace | ✗ | ✗ | Browser only | partial | **✓** |
-| Local / private | ✗ | ✓ | ✓ | ✗ cloud | **✓** |
-| Screenshot memory | ✗ | ✗ | ✗ | ✓ | **✓** |
-| Wolfram analytics | ✗ | ✗ | ✗ | ✗ | **✓** |
-| RAM recovery | ✗ | ✗ | ✗ | ✗ | **✓** |
-| Open source stack | ✗ | ✓ | ✗ | ✗ | **✓** |
+| Semantic AI clustering |  |  | Manual |  | **** |
+| Cross-app workspace |  |  | Browser only | partial | **** |
+| Local / private |  |  |  |  cloud | **** |
+| Screenshot memory |  |  |  |  | **** |
+| Wolfram analytics |  |  |  |  | **** |
+| RAM recovery |  |  |  |  | **** |
+| Open source stack |  |  |  |  | **** |
 
 ---
 
 ## Roadmap
 
 ```
-NOW ──────── Q3 2026 ──────── Q4 2026 ──────── 2027
- │               │                │               │
- ▼               ▼                ▼               ▼
+NOW  Q3 2026  Q4 2026  2027
+                                               
+                                               
 Windows        macOS +          Enterprise     AI workflow
   MVP          Linux             deploy         prediction
 
@@ -563,7 +563,7 @@ analytics                       SSO + audit    work summaries
 Contributions are welcome. KnemOS is built for the open-source community.
 
 ```bash
-# Fork → Clone → Branch → Build → PR
+# Fork  Clone  Branch  Build  PR
 
 git checkout -b feature/your-feature-name
 # Make changes
@@ -582,22 +582,22 @@ git push origin feature/your-feature-name
 
 ## License
 
-MIT License — see [LICENSE](./LICENSE) for details.
+MIT License  see [LICENSE](./LICENSE) for details.
 
 ---
 
 ## Acknowledgements
 
 Built with:
-- [Tauri](https://tauri.app) — Rust-native desktop framework
-- [mxbai-embed-large](https://www.mixedbread.ai/blog/mxbai-embed-large-v1) — High-fidelity local semantic embeddings
-- [HDBSCAN](https://hdbscan.readthedocs.io) — Density-based clustering
-- [ChromaDB](https://www.trychroma.com) — Local vector database
-- [Ollama](https://ollama.ai) — Local LLM inference
-- [Qwen2.5](https://qwenlm.github.io/blog/qwen2.5/) — Local workspace naming LLM (7B / 3B)
-- [Wolfram Language](https://www.wolfram.com/language/) — Computational intelligence
-- [Tesseract OCR](https://github.com/tesseract-ocr/tesseract) — Screen text extraction
-- [psutil](https://psutil.readthedocs.io) — System process monitoring
+- [Tauri](https://tauri.app)  Rust-native desktop framework
+- [mxbai-embed-large](https://www.mixedbread.ai/blog/mxbai-embed-large-v1)  High-fidelity local semantic embeddings
+- [HDBSCAN](https://hdbscan.readthedocs.io)  Density-based clustering
+- [ChromaDB](https://www.trychroma.com)  Local vector database
+- [Ollama](https://ollama.ai)  Local LLM inference
+- [Qwen2.5](https://qwenlm.github.io/blog/qwen2.5/)  Local workspace naming LLM (7B / 3B)
+- [Wolfram Language](https://www.wolfram.com/language/)  Computational intelligence
+- [Tesseract OCR](https://github.com/tesseract-ocr/tesseract)  Screen text extraction
+- [psutil](https://psutil.readthedocs.io)  System process monitoring
 
 ---
 
