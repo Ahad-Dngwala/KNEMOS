@@ -60,6 +60,7 @@ KnemOS ships as three connected systems:
 │  └─────────────┘    └─────────────────┘    └────────────┘  │
 └─────────────────────────────────────────────────────────────┘
 ```
+<img width="1191" height="714" alt="image_8b4bec0f" src="https://github.com/user-attachments/assets/fc047762-4d8b-4995-952a-0988e2b7da0e" />
 
 ---
 
