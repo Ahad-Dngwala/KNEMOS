@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "KnemOS Browser Intelligence",
+  "version": "1.0.0",
+
+  "permissions": [
+    "tabs",
+    "storage",
+    "scripting",
+    "tabGroups",
+    "nativeMessaging"
+  ],
+
+  "host_permissions": [
+    "<all_urls>"
+  ],
+
+  "background": {
+    "service_worker": "background.js"
+  }
+}
