@@ -151,12 +151,11 @@ export default function DownloadPage() {
             </p>
             {isAuthenticated ? (
               <a 
-                href="https://chrome.google.com/webstore/detail/knemos/your-extension-id" 
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/downloads/KNEMOS-Extension.zip" 
+                download
                 className="inline-block px-8 py-3 border-2 border-black text-xs uppercase tracking-[2px] font-bold text-black hover:bg-black hover:text-white transition-colors"
               >
-                Install Extension
+                Download .zip
               </a>
             ) : (
               <div className="space-y-2">
