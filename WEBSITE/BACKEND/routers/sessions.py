@@ -67,7 +67,7 @@ async def list_sessions():
         import asyncio
         
         def _get_sessions():
-            conn = sqlite3.connect(DB_PATH)
+            conn = sqlite3.connect(DB_PATH, timeout=15.0)
             rows = conn.execute(
                 """SELECT id, start_time, end_time, dominant_app, item_count, focus_score, interruptions, summary
                    FROM sessions ORDER BY start_time DESC LIMIT 20"""

@@ -1,7 +1,25 @@
 // background.js — KNEMOS Extension Service Worker
 
-const BACKEND = 'http://127.0.0.1:8765'
+let activeBackend = 'http://127.0.0.1:8765'
 const SYNC_ALARM = 'knemos-sync'
+
+async function getBackendUrl() {
+  try {
+    const res = await fetch(`${activeBackend}/api/system/health`, { signal: AbortSignal.timeout(1000) })
+    if (res.ok) return activeBackend
+  } catch(e) {}
+
+  for (let p = 8765; p <= 8775; p++) {
+    try {
+      const res = await fetch(`http://127.0.0.1:${p}/api/system/health`, { signal: AbortSignal.timeout(300) })
+      if (res.ok) {
+         activeBackend = `http://127.0.0.1:${p}`
+         return activeBackend
+      }
+    } catch(e) {}
+  }
+  return activeBackend
+}
 
 // ─────────────────────────────────────────
 // Utility: Filter and prepare tab data
@@ -66,7 +84,8 @@ async function performSync() {
       headers['Authorization'] = `Bearer ${knemosToken}`
     }
 
-    const response = await fetch(`${BACKEND}/api/system/browser-tabs`, {
+    const backendUrl = await getBackendUrl()
+    const response = await fetch(`${backendUrl}/api/system/browser-tabs`, {
       method: 'POST',
       headers,
       body: JSON.stringify({ tabs: payload }),
@@ -95,7 +114,8 @@ async function performSync() {
 // ─────────────────────────────────────────
 async function checkBackendHealth() {
   try {
-    const r = await fetch(`${BACKEND}/api/system/health`, {
+    const backendUrl = await getBackendUrl()
+    const r = await fetch(`${backendUrl}/api/system/health`, {
       signal: AbortSignal.timeout(2000)
     })
     return r.ok
@@ -197,7 +217,8 @@ async function syncWorkspaceTabGroups() {
     const headers = { 'Content-Type': 'application/json' }
     if (knemosToken) headers['Authorization'] = `Bearer ${knemosToken}`
     
-    const res = await fetch(`${BACKEND}/api/workspace/user-workspaces`, {
+    const backendUrl = await getBackendUrl()
+    const res = await fetch(`${backendUrl}/api/workspace/user-workspaces`, {
       signal: AbortSignal.timeout(5000), headers
     })
     if (!res.ok) throw new Error('Backend unreachable')

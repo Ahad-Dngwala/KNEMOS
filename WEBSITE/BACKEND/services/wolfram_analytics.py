@@ -22,7 +22,8 @@ DB_PATH = "./data/knemos.db"
 
 def _init_db():
     """Create analytics tables in SQLite (metadata only)."""
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(DB_PATH, timeout=15.0)
+    conn.execute("PRAGMA journal_mode=WAL;")
     conn.execute("""
         CREATE TABLE IF NOT EXISTS workspace_events (
             id         INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -57,7 +58,7 @@ _init_db()
 
 def log_workspace_switch(workspace_name: str):
     """Record a workspace switch event in SQLite."""
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(DB_PATH, timeout=15.0)
     conn.execute(
         "INSERT INTO workspace_events (event_type, workspace_name, timestamp) VALUES (?, ?, ?)",
         ('switch', workspace_name, int(time.time()))
@@ -68,7 +69,7 @@ def log_workspace_switch(workspace_name: str):
 
 def log_ram_snapshot(used_gb: float, percent: float):
     """Record a RAM snapshot for trend analysis."""
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(DB_PATH, timeout=15.0)
     conn.execute(
         "INSERT INTO ram_snapshots (timestamp, used_gb, percent) VALUES (?, ?, ?)",
         (int(time.time()), used_gb, percent)
@@ -164,7 +165,7 @@ def compute_focus_score() -> dict:
     Compute Cognitive Focus Score from last 24 hours of events.
     Tries Wolfram first, falls back to Python.
     """
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(DB_PATH, timeout=15.0)
     events = conn.execute(
         "SELECT event_type, timestamp FROM workspace_events WHERE timestamp > ?",
         (int(time.time()) - 86400,)
@@ -185,7 +186,7 @@ def get_heatmap() -> list[dict]:
     Build a 24-hour productivity heatmap from the last 7 days.
     Stored in SQLite, computed in Python.
     """
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(DB_PATH, timeout=15.0)
     rows = conn.execute(
         "SELECT timestamp FROM workspace_events WHERE timestamp > ?",
         (int(time.time()) - 7 * 86400,)
@@ -208,7 +209,7 @@ def get_predictions() -> dict:
     Simple next-workspace prediction based on recent event frequency.
     Full ML prediction can be added in v2.
     """
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(DB_PATH, timeout=15.0)
     rows = conn.execute(
         """SELECT workspace_name, COUNT(*) as freq
            FROM workspace_events

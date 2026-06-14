@@ -29,7 +29,7 @@ DB_PATH = "./data/knemos.db"
 
 # SQLite workspace tables
 def _init_db():
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(DB_PATH, timeout=15.0)
     conn.execute("""
         CREATE TABLE IF NOT EXISTS workspaces (
             id          TEXT PRIMARY KEY,
@@ -74,7 +74,7 @@ class UserWorkspace(BaseModel):
 
 
 def _save_workspaces_to_db(workspaces: list[dict]):
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(DB_PATH, timeout=15.0)
     conn.execute("DELETE FROM workspaces WHERE is_user_defined = 0")
     for ws in workspaces:
         conn.execute(
@@ -87,7 +87,7 @@ def _save_workspaces_to_db(workspaces: list[dict]):
 
 def _load_workspaces_from_db() -> list[dict]:
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=15.0)
         rows = conn.execute(
             "SELECT id, name, item_count, items_json, created_at FROM workspaces ORDER BY item_count DESC"
         ).fetchall()
@@ -108,7 +108,7 @@ def _load_workspaces_from_db() -> list[dict]:
 
 def _load_user_workspaces() -> list[dict]:
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=15.0)
         rows = conn.execute(
             "SELECT id, name, items_json, created_at, is_pinned, color, auto_sync_tabs FROM user_workspaces ORDER BY is_pinned DESC, created_at ASC"
         ).fetchall()
@@ -314,7 +314,7 @@ async def create_user_workspace(ws: UserWorkspace):
     """Create a new user-defined workspace."""
     ws_id = str(uuid.uuid4())
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=15.0)
         conn.execute(
             "INSERT INTO user_workspaces (id, name, items_json, created_at, color, auto_sync_tabs) VALUES (?, ?, ?, ?, ?, ?)",
             (ws_id, ws.name, json.dumps(ws.items), int(time.time()), ws.color, int(ws.auto_sync_tabs))
@@ -331,7 +331,7 @@ async def create_user_workspace(ws: UserWorkspace):
 async def update_user_workspace(ws_id: str, ws: UserWorkspace):
     """Update workspace name or items."""
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=15.0)
         conn.execute(
             "UPDATE user_workspaces SET name = ?, items_json = ?, color = ?, auto_sync_tabs = ? WHERE id = ?",
             (ws.name, json.dumps(ws.items), ws.color, int(ws.auto_sync_tabs), ws_id)
@@ -347,7 +347,7 @@ async def update_user_workspace(ws_id: str, ws: UserWorkspace):
 async def delete_user_workspace(ws_id: str, ungroup: bool = False):
     """Delete a user workspace."""
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=15.0)
         conn.execute("DELETE FROM user_workspaces WHERE id = ?", (ws_id,))
         conn.commit()
         conn.close()

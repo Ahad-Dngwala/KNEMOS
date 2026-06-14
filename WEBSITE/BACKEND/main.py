@@ -87,7 +87,6 @@ app.add_middleware(
         "chrome-extension://*",
         "http://localhost:3000",
         "http://localhost:3001",
-        "*",  # development — restrict in production
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -147,10 +146,19 @@ async def websocket_endpoint(websocket: WebSocket, token: str = None):
 
 
 if __name__ == "__main__":
+    import sys
+    port = 8765
+    if "--port" in sys.argv:
+        try:
+            port_index = sys.argv.index("--port")
+            port = int(sys.argv[port_index + 1])
+        except (ValueError, IndexError):
+            pass
+
     uvicorn.run(
         "main:app",
         host="127.0.0.1",
-        port=8765,
-        reload=True,
+        port=port,
+        reload=False,
         log_level="info"
     )

@@ -7,8 +7,15 @@ from fastapi.security import APIKeyHeader
 
 import jwt
 
-TOKEN_FILE = Path("./data/.auth_secret")
-JWT_TOKEN_FILE = Path("./data/.jwt_token")
+import sys
+
+if getattr(sys, 'frozen', False):
+    BACKEND_DIR = Path(sys.executable).resolve().parent
+else:
+    BACKEND_DIR = Path(__file__).resolve().parent.parent
+
+TOKEN_FILE = BACKEND_DIR / "data" / ".auth_secret"
+JWT_TOKEN_FILE = BACKEND_DIR / "data" / ".jwt_token"
 
 _secret = None
 _token = None

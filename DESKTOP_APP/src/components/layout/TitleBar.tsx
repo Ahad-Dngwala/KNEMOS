@@ -41,7 +41,7 @@ export const TitleBar = () => {
         {/* Backend status */}
         <div className="titlebar-status">
           <div className={`titlebar-status-dot ${isConnected ? 'connected' : ''}`} />
-          {isConnected ? 'Connected' : 'Offline'}
+          {isConnected ? 'Connected' : 'Reconnecting to local intelligence engine...'}
         </div>
 
         {/* RAM saved indicator */}

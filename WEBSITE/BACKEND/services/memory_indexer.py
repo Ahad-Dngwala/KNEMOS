@@ -42,7 +42,8 @@ MAX_SCREENSHOT_COUNT = 100
 
 # SQLite metadata tables
 def _init_db():
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(DB_PATH, timeout=15.0)
+    conn.execute("PRAGMA journal_mode=WAL;")
     conn.execute("""
         CREATE TABLE IF NOT EXISTS screenshots (
             id TEXT PRIMARY KEY,
@@ -82,7 +83,7 @@ def log_activity_event(event_type: str, title: str, metadata: dict = None):
     """Store a lightweight text-based activity event in SQLite."""
     import json
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=15.0)
         conn.execute(
             "INSERT INTO activity_log (timestamp, event_type, title, metadata_json) VALUES (?, ?, ?, ?)",
             (int(time.time()), event_type, title, json.dumps(metadata or {}))
@@ -98,7 +99,7 @@ def get_activity_timeline(hours: int = 24, limit: int = 200) -> list[dict]:
     import json
     cutoff = int(time.time()) - (hours * 3600)
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=15.0)
         rows = conn.execute(
             """SELECT timestamp, event_type, title, metadata_json
                FROM activity_log WHERE timestamp > ?
@@ -115,14 +116,15 @@ def get_activity_timeline(hours: int = 24, limit: int = 200) -> list[dict]:
             }
             for r in rows
         ]
-    except Exception:
+    except Exception as e:
+        print(f"[Memory] get_activity_timeline error: {e}")
         return []
 
 
 def _enforce_screenshot_retention():
     """Delete old/excess screenshots to enforce storage limits."""
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=15.0)
         cutoff = int(time.time()) - (MAX_SCREENSHOT_AGE_HOURS * 3600)
 
         # Delete by age
@@ -135,8 +137,8 @@ def _enforce_screenshot_retention():
             try:
                 if path and Path(path).exists():
                     Path(path).unlink()
-            except Exception:
-                pass
+            except Exception as e:
+                print(f"[Memory] Failed to delete old screenshot: {e}")
             conn.execute("DELETE FROM screenshots WHERE id = ?", (row_id,))
 
         # Delete excess (over max count) — keep newest
@@ -150,8 +152,8 @@ def _enforce_screenshot_retention():
                 try:
                     if path and Path(path).exists():
                         Path(path).unlink()
-                except Exception:
-                    pass
+                except Exception as e:
+                    print(f"[Memory] Failed to delete excess screenshot: {e}")
                 conn.execute("DELETE FROM screenshots WHERE id = ?", (row_id,))
 
         conn.commit()
@@ -174,7 +176,7 @@ def _enforce_screenshot_retention():
 def _is_duplicate_screenshot(text: str) -> bool:
     """Check if the last screenshot had very similar content (simple dedup)."""
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=15.0)
         row = conn.execute(
             "SELECT text_preview FROM screenshots ORDER BY timestamp DESC LIMIT 1"
         ).fetchone()
@@ -187,8 +189,8 @@ def _is_duplicate_screenshot(text: str) -> bool:
                 return True
             overlap = len(a_words & b_words) / len(a_words)
             return overlap > 0.7
-    except Exception:
-        pass
+    except Exception as e:
+        print(f"[Memory] Dup check error: {e}")
     return False
 
 
@@ -276,7 +278,7 @@ def capture_and_index(context_title: str = "") -> str | None:
 
     # 7. Store metadata in SQLite
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=15.0)
         conn.execute(
             "INSERT INTO screenshots (id, timestamp, screenshot_path, text_preview) VALUES (?, ?, ?, ?)",
             (screenshot_id, ts, str(img_path), preview)
@@ -349,7 +351,7 @@ def search_memory(query: str, limit: int = 5) -> list[dict]:
 def search_activity_log(query: str, limit: int = 10) -> list[dict]:
     """Text-based search over activity log (keyword matching)."""
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=15.0)
         rows = conn.execute(
             """SELECT timestamp, event_type, title, metadata_json
                FROM activity_log
@@ -368,14 +370,15 @@ def search_activity_log(query: str, limit: int = 10) -> list[dict]:
             }
             for r in rows
         ]
-    except Exception:
+    except Exception as e:
+        print(f"[Memory] search_activity_log error: {e}")
         return []
 
 
 def list_screenshots(limit: int = 50) -> list[dict]:
     """Return recent screenshot metadata from SQLite."""
     try:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_PATH, timeout=15.0)
         rows = conn.execute(
             "SELECT id, timestamp, screenshot_path, text_preview FROM screenshots ORDER BY timestamp DESC LIMIT ?",
             (limit,)
@@ -385,5 +388,6 @@ def list_screenshots(limit: int = 50) -> list[dict]:
             {"id": r[0], "timestamp": r[1], "screenshot_path": r[2], "text_preview": r[3]}
             for r in rows
         ]
-    except Exception:
+    except Exception as e:
+        print(f"[Memory] list_screenshots error: {e}")
         return []

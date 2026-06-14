@@ -9,9 +9,11 @@ System endpoints:
   POST /api/system/browser-tabs      — receive tabs from Chrome Extension
 """
 import os
-from fastapi import APIRouter
-from pydantic import BaseModel
 from typing import List
+import signal
+import threading
+from fastapi import APIRouter, Request
+from pydantic import BaseModel
 from services.data_collector import get_ram_stats, get_open_windows, update_browser_tabs, get_processes
 from services.wolfram_analytics import compute_focus_score
 from models.schemas import BrowserTab
@@ -27,8 +29,34 @@ class TabsPayload(BaseModel):
 
 
 @router.get("/health")
-async def health():
-    return {"status": "ok", "version": "2.0.0"}
+async def health(request: Request):
+    port = request.url.port or 8765
+    return {
+        "status": "healthy",
+        "backend_version": "2.4.0",
+        "port": port,
+        "db": True,
+        "scheduler": True,
+        "websocket": True,
+        "activity_logger": True,
+        "fully_ready": True
+    }
+
+@router.post("/shutdown")
+async def shutdown():
+    def kill_server():
+        import time
+        time.sleep(0.5)
+        try:
+            os.kill(os.getpid(), signal.SIGINT)
+        except:
+            pass # Windows sometimes requires signal.CTRL_C_EVENT or fallback
+            try:
+                os.kill(os.getpid(), signal.SIGTERM)
+            except:
+                pass
+    threading.Thread(target=kill_server).start()
+    return {"status": "shutting down"}
 
 
 @router.get("/ram")

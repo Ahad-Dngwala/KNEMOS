@@ -6,9 +6,7 @@ import { useAuthStore } from '../store/auth.store'
 import { useWSStore } from '../store/ws.store'
 
 
-const WS_BASE_URL = 'ws://127.0.0.1:8765/ws'
-
-export const useStableWebSocket = () => {
+export const useStableWebSocket = (isEnabled: boolean = true, port: number = 8765) => {
   const wsRef = useRef<WebSocket | null>(null)
   const reconnectTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const isConnectingRef = useRef(false)
@@ -22,6 +20,7 @@ export const useStableWebSocket = () => {
   const { handleIncomingCategories } = useCategoriesStore(s => s)
 
   const connect = useCallback(async () => {
+    if (!isEnabled) return
     if (wsRef.current?.readyState === WebSocket.OPEN || isConnectingRef.current) return
     
     // Ensure we have a token before connecting
@@ -32,7 +31,8 @@ export const useStableWebSocket = () => {
     }
 
     isConnectingRef.current = true
-    const url = currentToken ? `${WS_BASE_URL}?token=${currentToken}` : WS_BASE_URL
+    const wsBaseUrl = `ws://127.0.0.1:${port}/ws`
+    const url = currentToken ? `${wsBaseUrl}?token=${currentToken}` : wsBaseUrl
     const ws = new WebSocket(url)
     wsRef.current = ws
     setWs(ws)
@@ -86,16 +86,18 @@ export const useStableWebSocket = () => {
       if (pingIntervalRef.current) clearInterval(pingIntervalRef.current)
       
       // Exponential backoff or simple delay
-      reconnectTimerRef.current = setTimeout(connect, 5000)
+      if (isEnabled) {
+        reconnectTimerRef.current = setTimeout(connect, 5000)
+      }
     }
 
     ws.onerror = () => {
       ws.close()
     }
-  }, [setWorkspaces, setRAMStats, setFocusScore, handleIncomingCategories, setWs, setIsConnected, flushOutbox, fetchToken])
+  }, [isEnabled, port, setWorkspaces, setRAMStats, setFocusScore, handleIncomingCategories, setWs, setIsConnected, flushOutbox, fetchToken])
 
   useEffect(() => {
-    connect()
+    if (isEnabled) connect()
 
     return () => {
       if (reconnectTimerRef.current) clearTimeout(reconnectTimerRef.current)
@@ -106,7 +108,8 @@ export const useStableWebSocket = () => {
       if (wsRef.current) {
         wsRef.current.onclose = null // prevent reconnect logic on unmount
         wsRef.current.close()
+        wsRef.current = null
       }
     }
-  }, [connect])
+  }, [connect, isEnabled])
 }
