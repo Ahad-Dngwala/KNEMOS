@@ -1,3 +1,16 @@
+/*
+ * App.tsx
+ *
+ * Top-level application shell for the KNEMOS desktop client.
+ * Responsibilities:
+ * - Orchestrates backend boot & health checks (via Tauri `start_backend`).
+ * - Instantiates a single, stable WebSocket connection when the backend is ready.
+ * - Applies user settings and schedules low-frequency polling fallbacks.
+ *
+ * NOTE: This file contains runtime orchestration only. Do not change logic here
+ * unless you're modifying runtime behavior. The edits below are comments only.
+ */
+
 import { useEffect, useState } from 'react'
 import { authenticatedFetch } from './store/auth.store'
 import { TitleBar } from './components/layout/TitleBar'
@@ -34,6 +47,9 @@ function App() {
   const [activePort, setActivePort] = useState<number>(8765)
 
   // 1. WebSocket singleton connection
+  // Establish a single shared WebSocket connection once the backend reports
+  // readiness. `useStableWebSocket` encapsulates the connection lifecycle,
+  // reconnect/backoff behavior, and message dispatch to stores.
   useStableWebSocket(bootStatus === 'ready', activePort)
 
   // Deep link parsing
@@ -65,6 +81,9 @@ function App() {
     let attempts = 0
     const maxAttempts = 20
 
+    // Check the local HTTP health endpoint to determine whether the backend
+    // is up and fully ready. Returns `true` when the backend reports
+    // `fully_ready` and the expected `backend_version`.
     const checkHealth = async (port: number) => {
       try {
         const res = await fetch(`${DEFAULT_API}:${port}/api/system/health`)
@@ -80,6 +99,10 @@ function App() {
       return false
     }
 
+    // If the local backend is not yet running, ask the Tauri side to start
+    // it via the `start_backend` command. Once a port is returned, this
+    // function polls the health endpoint until the backend becomes ready or
+    // until attempts are exhausted.
     const bootBackend = async () => {
       try {
         const { invoke } = await import('@tauri-apps/api/core')
@@ -88,6 +111,9 @@ function App() {
         setActivePort(port)
         setBootStatus('starting')
         
+        // Polling loop: periodically probe the HTTP health endpoint until
+        // the backend indicates readiness. Uses `setInterval` to avoid
+        // blocking other UI tasks.
         const poll = setInterval(async () => {
           if (!active) {
             clearInterval(poll)

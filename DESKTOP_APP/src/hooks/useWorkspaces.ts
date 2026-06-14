@@ -4,6 +4,14 @@ import { UserWorkspace } from '../store/workspace.store'
 
 const API = 'http://127.0.0.1:8765'
 
+/**
+ * useWorkspaces.ts
+ *
+ * React Query hook to fetch a read-only list of user workspaces. This hook
+ * is suitable for components that want a cached view of workspaces without
+ * directly mutating store state. Uses a 5-minute stale time to reduce
+ * frequent network requests.
+ */
 export const useWorkspaces = () => {
   return useQuery({
     queryKey: ['workspaces'],
