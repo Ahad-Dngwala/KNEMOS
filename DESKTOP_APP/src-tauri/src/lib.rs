@@ -83,15 +83,22 @@ async fn start_backend(app: tauri::AppHandle, state: State<'_, BackendState>) ->
     let log_file = File::create("logs/backend.log").unwrap();
     let log_file_err = log_file.try_clone().unwrap();
 
-    let mut cmd = if cfg!(debug_assertions) {
-        let mut c = Command::new("python");
-        c.args(["../../WEBSITE/BACKEND/main.py", "--port", &target_port.to_string()]);
-        c
+    let mut cmd;
+    if std::path::Path::new("backend.exe").exists() {
+        cmd = Command::new("backend.exe");
+        cmd.args(["--port", &target_port.to_string()]);
     } else {
-        let mut c = Command::new("backend.exe");
-        c.args(["--port", &target_port.to_string()]);
-        c
-    };
+        // Fallback to python for local development or non-packaged backend
+        cmd = Command::new("python");
+        let fallback_path = "C:/Users/ahadd/Documents/GitHub/Knemos/WEBSITE/BACKEND/main.py";
+        let relative_path = "../../WEBSITE/BACKEND/main.py";
+        
+        if std::path::Path::new(relative_path).exists() {
+            cmd.args([relative_path, "--port", &target_port.to_string()]);
+        } else {
+            cmd.args([fallback_path, "--port", &target_port.to_string()]);
+        }
+    }
     
     cmd.stdout(std::process::Stdio::from(log_file));
     cmd.stderr(std::process::Stdio::from(log_file_err));
