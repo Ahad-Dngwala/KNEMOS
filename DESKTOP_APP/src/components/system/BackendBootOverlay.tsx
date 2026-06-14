@@ -59,7 +59,7 @@ export const BackendBootOverlay = ({ status }: { status: 'checking' | 'starting'
           </button>
           <button onClick={() => {
             import('@tauri-apps/plugin-shell').then(({ Command }) => {
-              Command.create('powershell', ['-c', 'notepad logs/backend.log']).execute();
+              Command.create('powershell', ['-c', 'notepad $env:TEMP/knemos_backend.log']).execute();
             })
           }} style={{ background: 'none', border: '1px solid var(--border)', color: 'var(--ink)', borderRadius: 'var(--r-md)', padding: '8px 16px', fontSize: 12, cursor: 'pointer' }}>
             Open Logs

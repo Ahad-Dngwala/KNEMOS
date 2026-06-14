@@ -78,9 +78,8 @@ async fn start_backend(app: tauri::AppHandle, state: State<'_, BackendState>) ->
         }
     }
     
-    // 2. Not running. Spawn it.
-    std::fs::create_dir_all("logs").unwrap_or_default();
-    let log_file = File::create("logs/backend.log").unwrap();
+    let log_path = std::env::temp_dir().join("knemos_backend.log");
+    let log_file = File::create(&log_path).unwrap_or_else(|_| File::create("backend_fallback.log").unwrap());
     let log_file_err = log_file.try_clone().unwrap();
 
     let mut cmd;
