@@ -6,6 +6,18 @@ import { useAuthStore } from '../store/auth.store'
 import { useWSStore } from '../store/ws.store'
 
 
+/**
+ * useStableWebSocket.ts
+ *
+ * High-level hook that provides a "stable" WebSocket connection to the
+ * local KNEMOS backend. Responsibilities:
+ * - Ensures only one connection is active at a time.
+ * - Fetches/attaches the auth token when available.
+ * - Flushes queued messages via `ws.store` when the socket opens.
+ * - Emits keepalive `ping` messages and handles reconnect logic on close.
+ *
+ * This file documents lifecycle semantics; no runtime behavior is changed.
+ */
 export const useStableWebSocket = (isEnabled: boolean = true, port: number = 8765) => {
   const wsRef = useRef<WebSocket | null>(null)
   const reconnectTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
