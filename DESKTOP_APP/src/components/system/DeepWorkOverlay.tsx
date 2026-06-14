@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { authenticatedFetch } from '../../store/auth.store'
 import { useUIStore } from '../../store/ui.store'
 import { useWorkspaceStore } from '../../store/workspace.store'
+import { useSettingsStore } from '../../store/settings.store'
 
 const API = 'http://127.0.0.1:8765'
 
@@ -15,6 +16,9 @@ export const DeepWorkOverlay = () => {
   const [errorMsg, setErrorMsg] = useState('')
 
   const selectedWorkspace = workspaces.find(w => w.id === selectedWorkspaceId)
+
+  const { deepFocusTimerSeconds } = useSettingsStore()
+  const [timeLeft, setTimeLeft] = useState(deepFocusTimerSeconds)
 
   const handleActivate = async () => {
     setIsActivating(true)
@@ -39,6 +43,7 @@ export const DeepWorkOverlay = () => {
       if (data.status === 'activated' || data.status === 'ok') {
         setMinimizedCount(data.minimized_count || 0)
         setStatus('active')
+        setTimeLeft(deepFocusTimerSeconds) // Reset timer
         if (selectedWorkspaceId) {
           setFocusWorkspace(selectedWorkspaceId)
         }
@@ -63,6 +68,23 @@ export const DeepWorkOverlay = () => {
     setMinimizedCount(0)
     toggleDeepWork()
   }
+
+  // Timer countdown logic
+  useEffect(() => {
+    let timer: any;
+    if (status === 'active' && timeLeft > 0) {
+      timer = setInterval(() => {
+        setTimeLeft((prev: number) => {
+          if (prev <= 1) {
+            handleExit()
+            return 0
+          }
+          return prev - 1
+        })
+      }, 1000)
+    }
+    return () => clearInterval(timer)
+  }, [status, timeLeft])
 
   return (
     <div
@@ -205,6 +227,15 @@ export const DeepWorkOverlay = () => {
       {status === 'active' && (
         <div style={{ marginTop: 24, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
           <div style={{ display: 'flex', gap: 40 }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 10, letterSpacing: 2, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginBottom: 4 }}>
+                Time Left
+              </div>
+              <div style={{ fontSize: 28, fontWeight: 100, color: '#fff', fontVariantNumeric: 'tabular-nums' }}>
+                {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
+              </div>
+            </div>
+            <div style={{ width: 1, background: 'rgba(255,255,255,0.1)' }} />
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontSize: 10, letterSpacing: 2, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginBottom: 4 }}>
                 Focus Grade

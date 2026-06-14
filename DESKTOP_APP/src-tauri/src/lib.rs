@@ -18,6 +18,10 @@ fn greet(name: &str) -> String {
 #[tauri::command]
 fn get_auth_token() -> Result<String, String> {
     let mut possible_paths = vec![];
+    if let Ok(app_data) = std::env::var("APPDATA") {
+        let app_data_path = std::path::PathBuf::from(app_data);
+        possible_paths.push(app_data_path.join("KNEMOS/data/.jwt_token"));
+    }
     if let Ok(exe_path) = std::env::current_exe() {
         if let Some(parent) = exe_path.parent() {
             // Production path
