@@ -15,13 +15,15 @@ Everything runs on your machine. No cloud. No data leaving your system.`,
     symbol: '○',
   },
   {
-    id: 'backend',
-    title: 'Start the Backend',
-    subtitle: 'Local intelligence engine',
-    content: `KNEMOS needs its Python backend to be running to capture system data, track activity, and power the AI chat.
+    id: 'prerequisites',
+    title: 'System Prerequisites',
+    subtitle: 'Python & Wolfram Engine',
+    content: `KNEMOS runs locally, so you'll need the right engines installed on your machine to power the system:
 
-Open a terminal and run:`,
-    code: 'cd WEBSITE/BACKEND && uvicorn main:app --port 8765 --reload',
+1. **Python 3.10+**: Required to run the local intelligence server.
+2. **Wolfram Engine**: Required for advanced semantic analytics and timeline graph resolution.
+
+Make sure both are installed and added to your system PATH.`,
     symbol: '+',
   },
   {
