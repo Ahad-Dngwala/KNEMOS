@@ -3,6 +3,20 @@
 
 'use strict'
 
+/*
+ * popup.js — KNEMOS Extension Popup
+ *
+ * Provides the lightweight popup UI used to display sync status, a small
+ * list of open tabs, and theme controls. The popup communicates with the
+ * background service worker for status and to trigger force-syncs.
+ *
+ * Notes on behavior:
+ * - `loadStatus` requests background state via `GET_STATUS`.
+ * - Manual sync triggers `FORCE_SYNC` and updates the UI optimistically.
+ *
+ * Only comments were added to improve readability and maintainability.
+ */
+
 // ── DOM refs ──────────────────────────────
 const statusDot      = document.getElementById('statusDot')
 const statusCard     = document.getElementById('statusCard')

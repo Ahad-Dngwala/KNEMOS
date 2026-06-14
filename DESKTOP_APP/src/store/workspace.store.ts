@@ -43,6 +43,17 @@ interface WorkspaceState {
 
 const API = 'http://127.0.0.1:8765'
 
+/**
+ * workspace.store.ts
+ *
+ * Manages user workspaces and synchronizes local state with the backend.
+ * - Uses `persist` middleware to keep a local copy (`knemos-workspaces`).
+ * - Exposes optimistic updates (e.g., `createWorkspace` returns a temp id and
+ *   later reconciles with the server-provided id when available).
+ *
+ * Note: Network errors are intentionally swallowed in many places to keep
+ * the UI responsive; callers should account for possible divergence.
+ */
 export const useWorkspaceStore = create<WorkspaceState>()(
   persist(
     (set, get) => ({
