@@ -84,6 +84,7 @@ app.add_middleware(
         "http://127.0.0.1:1420",
         "tauri://localhost",
         "https://tauri.localhost",
+        "http://tauri.localhost",
         "chrome-extension://*",
         "http://localhost:3000",
         "http://localhost:3001",
