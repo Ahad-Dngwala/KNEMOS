@@ -1,14 +1,15 @@
 # KNEMOS
 
-> **K**nowledge · **nem**onics · **OS**  The Cognitive Layer for Your Desktop
+> **K**nowledge · **Nem**onics · **OS**
+> *The Cognitive Layer for Your Desktop*
 
-![KNEMOS](https://img.shields.io/badge/KNEMOS-v1.0--alpha-000000?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PC9zdmc+)
+![KNEMOS](https://img.shields.io/badge/KNEMOS-v1.0--alpha-000000?style=for-the-badge\&logo=data\:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PC9zdmc+)
 ![Track](https://img.shields.io/badge/OSC_AI_Build_1.0-Future_of_Productivity-00C896?style=for-the-badge)
 ![Platform](https://img.shields.io/badge/Platform-Windows_MVP-0A0A0A?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-00C896?style=for-the-badge)
 ![Stack](https://img.shields.io/badge/Stack-Tauri_+_FastAPI_+_Wolfram-000000?style=for-the-badge)
 
-```
+```text
   ██╗  ██╗███╗   ██╗███████╗███╗   ███╗ ██████╗ ███████╗
   ██║ ██╔╝████╗  ██║██╔════╝████╗ ████║██╔═══██╗██╔════╝
   █████╔╝ ██╔██╗ ██║█████╗  ██╔████╔██║██║   ██║███████╗
@@ -21,144 +22,441 @@
 
 ---
 
-## What is KNEMOS?
+# What is KNEMOS?
 
-Modern operating systems were designed **30 years ago** around files and folders.  
-Today, knowledge workers live across 40+ browser tabs, multiple IDEs, local files, terminal sessions, and messaging apps  simultaneously.
+KNEMOS is a **local-first AI-powered cognitive operating layer** that continuously understands, organizes, and enhances a user's digital workspace.
 
-**KNEMOS** is a local-first AI productivity system that acts as a cognitive layer between the user and their computer. It automatically clusters your entire digital workspace into intelligent semantic groups, makes your screen history searchable in natural language, and measures your cognitive performance using Wolfram Language analytics.
+Instead of treating browser tabs, applications, files, terminals, and documents as isolated resources, KNEMOS automatically groups them into intelligent semantic workspaces based on context, intent, and activity.
+
+The result is a computing experience where your system understands **what you are working on**, not just **which application is open**.
+
+---
+
+## Why KNEMOS Exists
+
+Modern operating systems were designed around files and folders—an interaction model that has remained largely unchanged for decades.
+
+Today's knowledge workers operate across:
+
+* 40+ browser tabs
+* Multiple IDEs and terminals
+* Cloud documents and local files
+* Messaging and collaboration platforms
+* AI assistants and research tools
+
+Although these resources often belong to the same project, operating systems treat them as completely unrelated entities.
+
+This creates a persistent productivity problem:
+
+* Frequent context switching
+* Lost research and forgotten information
+* Fragmented workflows
+* Reduced focus and cognitive efficiency
+* Excessive resource consumption from inactive workspaces
+
+KNEMOS was created to bridge this gap by introducing a semantic layer between the user and the operating system.
 
 > *"A cognitive operating layer between the user and their computer."*
 
 ---
 
-## The Numbers
+# The Numbers
 
-| Problem | Impact |
-|---------|--------|
-| Average tabs open per session | 40+ |
-| Productive time lost daily to context switching | 20 min |
-| RAM wasted on idle background tabs | 4.3 GB |
-| Deep work efficiency lost to fragmentation | ~40% |
+Modern knowledge work is increasingly fragmented across applications, browser tabs, files, and communication tools. This fragmentation creates measurable productivity and performance costs.
+
+| Challenge                                         | Impact           |
+| ------------------------------------------------- | ---------------- |
+| Average browser tabs per active session           | 40+              |
+| Productive time lost to context switching         | ~20 minutes/day  |
+| Memory consumed by inactive browser tabs          | Up to 4.3 GB RAM |
+| Deep-work efficiency lost to fragmented workflows | ~40%             |
+
+These metrics highlight a fundamental limitation of traditional operating systems: they manage applications and files, but they do not manage context.
 
 ---
 
-## Product Ecosystem
+# Product Ecosystem
 
-KNEMOS ships as three connected systems:
+KNEMOS is delivered as three interconnected components that work together to create a unified cognitive workspace.
 
+```text
+                    KNEMOS Ecosystem
+
+ ┌─────────────┐     ┌─────────────────────┐     ┌─────────────────┐
+ │   Website   │     │     Desktop App     │     │ Browser Extension│
+ │             │     │    (Core Engine)    │     │                 │
+ │ Next.js 15  │────▶│ Tauri v2            │◀────│ Chrome MV3      │
+ │ Vercel      │     │ FastAPI Backend     │     │ Tab Activity    │
+ │ Supabase    │     │ Local AI Engine     │     │ URL Metadata    │
+ └─────────────┘     └─────────────────────┘     └─────────────────┘
 ```
 
-                     KNEMOS Ecosystem                         
-                                                             
-            
-     Website         Desktop App          Browser     
-                     (Core Engine)       Extension    
-    Next.js 15   Tauri v2        Chrome MV3   
-    Vercel           FastAPI                          
-    Supabase         Local AI            Tab access   
-            
-
-```
 <img width="1191" height="714" alt="image_8b4bec0f" src="https://github.com/user-attachments/assets/fc047762-4d8b-4995-952a-0988e2b7da0e" />
 
----
+### Component Overview
 
-## Core Features
+**Desktop Application**
 
-### 01 · Semantic Workspace Clustering
-AI automatically groups your browser tabs, VS Code windows, terminal sessions, and local folders into named semantic workspaces  no manual tagging, no folder creation.
+* Primary user interface
+* Semantic workspace management
+* Search, analytics, and productivity dashboard
+* Built with Tauri v2 and React
 
-```
-BEFORE                         AFTER
-                         
-github.com/VendorBridge        VendorBridge Dev
-auth.py  VS Code               GitHub · FastAPI · auth.py · Terminal
-FastAPI docs               
-Terminal #3                    Research Workspace
-Stack Overflow                  Docs · Stack Overflow · Bookmarks
-YouTube (Tab #27)          
-Gmail  4 tabs                 Communication
-Slack                           Slack · Gmail · Notifications
-```
+**Browser Extension**
 
-### 02 · Memory Lane
-Periodically captures screenshots, runs OCR, generates embeddings, and indexes everything into ChromaDB. Users can search their entire workspace history in natural language.
+* Captures browser context and tab metadata
+* Streams workspace information to the local AI backend
+* Enables semantic grouping of web-based activities
 
-```
-Search: "that React auth bug from this morning"
-Returns: screenshot · timestamp · full workspace state
-```
+**Local AI Backend**
 
-### Semantic Desktop Search (ChromaDB)
-* **Local Embeddings**: Converts text from screenshots into 1024-dimensional vectors using `mxbai-embed-large`.
-* **Concept Search**: Search for "vacation" to find a screenshot containing the word "Hawaii".
-
-### 02.5 · Wolfram Intelligence Layer (Phase 23)
-* **Computational Analytics**: Deep productivity forecasts, context-switch tracking, and memory relationship graphs powered by Wolfram Engine.
-* **Optional Enhancement**: KNEMOS functions flawlessly without it, gracefully falling back to standard Python heuristics.
-* **100% Local**: The kernel runs entirely on your local machine; absolutely no cloud endpoints.
-
-**Pipeline:**
-```
-Screenshot (mss)  OCR (Tesseract)  Embed (mxbai-embed-large)
-                                           
-Natural language query  ChromaDB  Vector index
-```
-
-### 03 · Deep Work Mode
-AI detects off-context applications and tabs relative to the active workspace, minimizes distractions, and activates a visual focus environment.
-
-### 04 · RAM Recovery Engine
-Intelligently hibernates inactive workspaces and calculates live RAM/CPU savings. Displays a real-time counter on the dashboard.
-
-```
-Example output:  AI recovered 4.3 GB RAM · 12 tabs hibernated
-```
-
-### 05 · Predictive Productivity Analytics (Wolfram Language)
-Workspace activity data is piped through Wolfram Language to generate:
-- **Cognitive Focus Score** (daily 0100 rating)
-- **Workflow Heatmap** (peak productivity time-of-day)
-- **Context-Switch Frequency Graph**
-- **Next-Workspace Prediction**
-
-### 06 · Context Export
-Export any semantic workspace as a structured Markdown file including all links, file paths, metadata, and project context.
+* Processes activity data locally
+* Generates embeddings and semantic clusters
+* Powers Memory Lane, analytics, and workspace intelligence
+* Ensures user data remains on-device
 
 ---
 
-## AI Pipeline
+# Core Features
 
-```
-Step 1  Data Collection
-  psutil (processes) + pywin32 (window titles) + watchdog (files)
-  + mss (screenshots) + Chrome Extension (tab URLs)
-          
-Step 2  Semantic Embeddings
-  mxbai-embed-large (via Ollama)
-  All textual metadata  high-fidelity semantic vectors
-          
-Step 3  Clustering
-  HDBSCAN
-  Semantically related resources  workspace clusters
-          
-Step 4  Workspace Naming
-  Ollama + Qwen2.5-7B (standard) · Qwen2.5-3B (low-end devices)
-  Clusters  intelligent workspace labels
-          
-Step 5  Memory Indexing
-  Tesseract OCR + ChromaDB
-  Screenshots  searchable vector memory
-          
-Step 6  Workflow Analytics
-  Wolfram Language (wolframclient)
-  Clusters + time data  Cognitive Focus Score + predictions
+## 01 · Semantic Workspace Clustering
+
+KNEMOS automatically organizes browser tabs, VS Code windows, terminal sessions, documents, and folders into intelligent semantic workspaces.
+
+Instead of manually creating folders, tags, or project groups, the system understands contextual relationships and builds workspace structures automatically.
+
+### Example Transformation
+
+```text
+BEFORE
+
+github.com/VendorBridge
+auth.py (VS Code)
+FastAPI Documentation
+Terminal #3
+Stack Overflow
+YouTube Tab #27
+Gmail (4 tabs)
+Slack
 ```
 
-> All processing runs on `127.0.0.1:8765`  no data leaves your machine.
+```text
+AFTER
+
+VendorBridge Development
+├─ GitHub Repository
+├─ FastAPI Documentation
+├─ auth.py
+└─ Terminal Session
+
+Research Workspace
+├─ Documentation
+├─ Stack Overflow
+└─ Reference Materials
+
+Communication
+├─ Gmail
+├─ Slack
+└─ Notifications
+```
+
+### Benefits
+
+* No manual organization
+* Reduced context switching
+* Cleaner digital workspace
+* Faster project navigation
+* Improved focus and task continuity
 
 ---
+
+## 02 · Memory Lane
+
+Memory Lane transforms your digital activity into a searchable knowledge timeline.
+
+The system periodically captures workspace state, performs OCR on screenshots, generates semantic embeddings, and indexes everything into ChromaDB for natural-language retrieval.
+
+### Example Query
+
+```text
+Search:
+"that React authentication bug from this morning"
+```
+
+### Result
+
+```text
+✓ Screenshot
+✓ Timestamp
+✓ Related Workspace
+✓ Open Tabs
+✓ Associated Files
+✓ Complete Workspace State
+```
+
+### Capabilities
+
+* Search past work using natural language
+* Recover forgotten information instantly
+* Locate screenshots, documents, and sessions
+* Navigate historical workspace states
+* Build a searchable memory layer for the entire desktop
+
+```
+```
+## Semantic Desktop Search (ChromaDB)
+
+Memory Lane is powered by a semantic search layer built on ChromaDB, allowing users to retrieve historical information using concepts rather than exact keywords.
+
+### Key Capabilities
+
+**Local Embeddings**
+
+* Text extracted from screenshots and workspace activity is converted into high-dimensional semantic vectors using `mxbai-embed-large`.
+* All embedding generation occurs locally through Ollama.
+
+**Concept-Based Retrieval**
+
+* Search by meaning instead of exact matches.
+* Example: searching for **"vacation"** can surface screenshots containing related terms such as **"Hawaii"**, **"travel itinerary"**, or **"hotel booking"**.
+
+**Persistent Memory Index**
+
+* Creates a searchable knowledge layer across screenshots, documents, browser sessions, and workspace activity.
+
+---
+
+## 02.5 · Wolfram Intelligence Layer
+
+The Wolfram Intelligence Layer provides advanced computational analytics on top of workspace activity data.
+
+### Core Functions
+
+**Computational Analytics**
+
+* Productivity forecasting
+* Context-switch analysis
+* Cognitive workload measurement
+* Workspace relationship mapping
+
+**Optional Architecture**
+
+* KNEMOS remains fully functional without Wolfram Engine.
+* When unavailable, the system automatically falls back to Python-based analytical models.
+
+**100% Local Processing**
+
+* No cloud inference
+* No external analytics services
+* All computations execute on the user's machine
+
+### Memory Processing Pipeline
+
+```text
+Screenshot Capture (mss)
+          ↓
+OCR Extraction (Tesseract)
+          ↓
+Semantic Embeddings (mxbai-embed-large)
+          ↓
+ChromaDB Vector Storage
+          ↓
+Natural Language Search & Retrieval
+```
+
+---
+
+## 03 · Deep Work Mode
+
+Deep Work Mode actively reduces workspace distractions by identifying applications, windows, and browser tabs that are unrelated to the current semantic workspace.
+
+### Features
+
+* Off-context application detection
+* Workspace-aware focus environment
+* Automatic distraction reduction
+* Cleaner visual workspace
+* Improved task continuity
+
+The objective is to maintain cognitive flow and reduce unnecessary context switching during focused work sessions.
+
+---
+
+## 04 · RAM Recovery Engine
+
+The RAM Recovery Engine continuously monitors system resources and intelligently hibernates inactive workspaces.
+
+### Capabilities
+
+* Workspace hibernation
+* Memory optimization
+* CPU usage reduction
+* Live resource monitoring
+* Real-time savings dashboard
+
+### Example Output
+
+```text
+AI recovered 4.3 GB RAM
+12 inactive tabs hibernated
+Resource usage reduced by 27%
+```
+
+---
+
+## 05 · Predictive Productivity Analytics
+
+Workspace activity is processed through the Wolfram analytics layer to generate measurable productivity insights.
+
+### Generated Metrics
+
+**Cognitive Focus Score**
+
+* Daily focus rating from 0–100
+* Based on activity continuity and interruption patterns
+
+**Workflow Heatmap**
+
+* Identifies peak productivity periods
+* Visualizes focus intensity throughout the day
+
+**Context-Switch Frequency**
+
+* Measures how often users move between unrelated tasks
+* Helps identify productivity bottlenecks
+
+**Next Workspace Prediction**
+
+* Predicts the most likely workspace a user will return to
+* Enables proactive context restoration
+
+---
+
+## 06 · Context Export
+
+Every semantic workspace can be exported as a portable, structured Markdown package.
+
+### Export Contents
+
+* Browser links
+* File references
+* Workspace metadata
+* Session history
+* Context summaries
+* Related resources
+
+This allows users to archive, share, or transfer complete workspace contexts without losing organizational structure.
+
+---
+
+# AI Pipeline
+
+The KNEMOS intelligence layer follows a six-stage processing pipeline.
+
+### Step 1 — Data Collection
+
+Sources:
+
+* `psutil` (running processes)
+* `pywin32` (window titles)
+* `watchdog` (file activity)
+* `mss` (screenshots)
+* Chrome Extension (tab URLs and metadata)
+
+Output:
+
+* Unified workspace activity stream
+
+---
+
+### Step 2 — Semantic Embeddings
+
+Model:
+
+* `mxbai-embed-large` via Ollama
+
+Purpose:
+
+* Convert textual metadata into semantic vector representations
+
+Output:
+
+* High-fidelity embeddings for search and clustering
+
+---
+
+### Step 3 — Workspace Clustering
+
+Algorithm:
+
+* HDBSCAN
+
+Purpose:
+
+* Group semantically related resources into meaningful workspaces
+
+Output:
+
+* Dynamic semantic workspace clusters
+
+---
+
+### Step 4 — Workspace Naming
+
+Models:
+
+* `Qwen2.5-7B` (standard devices)
+* `Qwen2.5-3B` (low-resource devices)
+
+Purpose:
+
+* Generate human-readable workspace names
+* Infer project intent and context
+
+Output:
+
+* Intelligent workspace labels
+
+---
+
+### Step 5 — Memory Indexing
+
+Components:
+
+* Tesseract OCR
+* ChromaDB
+
+Purpose:
+
+* Transform screenshots into searchable memory records
+
+Output:
+
+* Long-term semantic memory index
+
+---
+
+### Step 6 — Workflow Analytics
+
+Engine:
+
+* Wolfram Language (`wolframclient`)
+
+Purpose:
+
+* Analyze workspace behavior over time
+
+Output:
+
+* Focus Score
+* Productivity Heatmaps
+* Context-Switch Analytics
+* Predictive Insights
+
+---
+
+> **Local-First Architecture:** All processing runs through the local backend at `127.0.0.1:8765`. User data, screenshots, embeddings, and analytics never leave the machine unless explicitly exported by the user.
+
 
 ## Technology Stack
 
@@ -197,7 +495,30 @@ KNEMOS auto-detects available system memory at startup and selects the appropria
 
 ---
 
-## Architecture
+# Architecture
+
+KNEMOS follows a local-first, modular architecture designed to understand, organize, and optimize digital workspaces without relying on cloud processing.
+
+The platform consists of six primary layers:
+
+| Layer                 | Responsibility                                                                               |
+| --------------------- | -------------------------------------------------------------------------------------------- |
+| Data Collection       | Captures workspace activity from the operating system, browser, file system, and screenshots |
+| Semantic Intelligence | Generates embeddings and semantic representations of activity                                |
+| Workspace Engine      | Clusters related resources and generates workspace identities                                |
+| Memory Layer          | Creates a searchable historical memory of user activity                                      |
+| Analytics Layer       | Computes focus, productivity, and workflow insights                                          |
+| Desktop Interface     | Presents workspaces, memory, analytics, and controls to the user                             |
+
+### Architectural Principles
+
+* **Local-First Processing** — Core intelligence executes entirely on-device.
+* **Privacy by Default** — Workspace history, screenshots, embeddings, and analytics remain local.
+* **Semantic Understanding** — Resources are organized by meaning rather than application boundaries.
+* **Modular Design** — Individual subsystems can evolve independently.
+* **Resource Efficiency** — Optimized for desktop environments using lightweight technologies such as Tauri and FastAPI.
+
+### System Architecture Diagram
 
 ```mermaid
 flowchart TD
@@ -229,13 +550,13 @@ flowchart TD
 
     subgraph ANALYTICS[" Analytics Layer"]
         E1[Wolfram Language\nwolframclient]
-        E2[Cognitive Focus\nScore 0100]
+        E2[Cognitive Focus\nScore 0–100]
         E3[Workflow\nHeatmap]
         E4[Context-Switch\nFrequency Graph]
         E5[Next-Workspace\nPrediction]
     end
 
-    subgraph BACKEND[" FastAPI Backend  127.0.0.1:8765"]
+    subgraph BACKEND[" FastAPI Backend · 127.0.0.1:8765"]
         F1[workspace.py\nClustering Endpoints]
         F2[memory.py\nMemory Lane Endpoints]
         F3[analytics.py\nWolfram Endpoints]
@@ -243,7 +564,7 @@ flowchart TD
         F5[WebSocket /ws\nReal-time Events]
     end
 
-    subgraph FRONTEND[" Desktop UI  Tauri v2 + React 18"]
+    subgraph FRONTEND[" Desktop UI · Tauri v2 + React 18"]
         G1[Workspace\nSidebar]
         G2[Memory Lane\nSearch UI]
         G3[Analytics\nDashboard]
@@ -253,75 +574,56 @@ flowchart TD
 
     subgraph CLOUD[" Cloud Layer (Auth Only)"]
         H1[Supabase Auth]
-        H2[Next.js 15\nWebsite  Vercel]
+        H2[Next.js 15\nWebsite · Vercel]
     end
 
-    %% Data flow: Collection  Embedding
-    A1 & A2 & A3 & A5 -->|"Textual metadata"| B1
-    A4 -->|"Screenshots"| D1
-
-    %% Embedding  Clustering
-    B1 -->|"Semantic vectors"| C1
-
-    %% Clustering  Naming
-    C1 -->|"Clusters"| C2
-    C2 -->|"6 GB VRAM"| C3
-    C2 -->|"<6 GB VRAM"| C4
-    C3 & C4 -->|"Named workspaces"| C5
-
-    %% Memory pipeline
-    D1 -->|"OCR text  embed"| B1
-    B1 -->|"Vectors"| D2
-    D2 -->|"ANN search"| D3
-
-    %% Analytics pipeline
-    C5 -->|"Activity + time data"| E1
+    A1 & A2 & A3 & A5 --> B1
+    A4 --> D1
+    B1 --> C1
+    C1 --> C2
+    C2 --> C3
+    C2 --> C4
+    C3 & C4 --> C5
+    D1 --> B1
+    B1 --> D2
+    D2 --> D3
+    C5 --> E1
     E1 --> E2 & E3 & E4 & E5
-
-    %% Backend wires
     C5 --> F1
     D3 --> F2
     E2 & E3 & E4 & E5 --> F3
-    A2 -->|"RAM/CPU stats"| F1
-    F4 -->|"Scheduled scans"| A1 & A2 & A3 & A4
-
-    %% WebSocket  Frontend
-    F1 & F2 & F3 -->|"REST API"| FRONTEND
-    F5 -->|"Live push events"| G1
-
-    %% Frontend components
+    A2 --> F1
+    F4 --> A1 & A2 & A3 & A4
+    F1 & F2 & F3 --> FRONTEND
+    F5 --> G1
     F1 --> G1 & G4 & G5
     F2 --> G2
     F3 --> G3
-
-    %% Chrome Extension
-    A5 -->|"Native Messaging"| F1
-
-    %% Cloud (auth only)
+    A5 --> F1
     FRONTEND <-->|"Auth token only"| H1
-    H2 -->|"Download + login"| H1
-
-    %% Styling
-    classDef inputStyle fill:#1a1a2e,stroke:#00C896,color:#fff
-    classDef embedStyle fill:#16213e,stroke:#00C896,color:#fff
-    classDef clusterStyle fill:#0f3460,stroke:#00C896,color:#fff
-    classDef memoryStyle fill:#1a1a2e,stroke:#4fc3f7,color:#fff
-    classDef analyticsStyle fill:#16213e,stroke:#ff9800,color:#fff
-    classDef backendStyle fill:#0f3460,stroke:#e91e63,color:#fff
-    classDef frontendStyle fill:#1b2838,stroke:#00C896,color:#fff
-    classDef cloudStyle fill:#2d2d2d,stroke:#888,color:#ccc
-
-    class A1,A2,A3,A4,A5 inputStyle
-    class B1 embedStyle
-    class C1,C2,C3,C4,C5 clusterStyle
-    class D1,D2,D3 memoryStyle
-    class E1,E2,E3,E4,E5 analyticsStyle
-    class F1,F2,F3,F4,F5 backendStyle
-    class G1,G2,G3,G4,G5 frontendStyle
-    class H1,H2 cloudStyle
+    H2 --> H1
 ```
 
----
+### Processing Flow
+
+```text
+Activity Collection
+        ↓
+Semantic Embeddings
+        ↓
+Workspace Clustering
+        ↓
+Workspace Naming
+        ↓
+Memory Indexing
+        ↓
+Analytics Generation
+        ↓
+Desktop Experience
+```
+
+> **Privacy Guarantee:** All workspace intelligence, embeddings, screenshots, analytics, and memory indexing execute locally through the FastAPI backend. Cloud services are limited to authentication, updates, and optional telemetry.
+
 
 ## Getting Started
 
@@ -608,54 +910,124 @@ analytics                       SSO + audit    work summaries
 
 ---
 
-## Contributing
+# Contributing
 
-Contributions are welcome. KNEMOS is built for the open-source community.
+KNEMOS is an open-source project built around the belief that the future of computing should be more context-aware, privacy-preserving, and intelligent.
+
+Contributions of all sizes are welcome—from bug fixes and documentation improvements to new platform integrations and core features.
+
+### Getting Started
 
 ```bash
-# Fork  Clone  Branch  Build  PR
+# Create a feature branch
 
 git checkout -b feature/your-feature-name
-# Make changes
-git commit -m "feat: your feature description"
+
+# Make your changes
+
+git commit -m "feat: add your feature description"
+
 git push origin feature/your-feature-name
-# Open Pull Request
+
+# Open a Pull Request
 ```
 
-**Areas actively needing contribution:**
-- macOS system integration (pyobjc)
-- Linux window management (xdotool / wnck)
-- Wolfram analytics notebook templates
-- Browser extension for Firefox
+### Contribution Workflow
+
+```text
+Fork Repository
+      ↓
+Create Branch
+      ↓
+Implement Changes
+      ↓
+Submit Pull Request
+      ↓
+Code Review
+      ↓
+Merge
+```
+
+### Areas Needing Contribution
+
+We are actively looking for contributors in the following areas:
+
+#### Platform Support
+
+* macOS system integration (`pyobjc`)
+* Linux window management (`xdotool`, `wnck`)
+* Cross-platform workspace monitoring
+
+#### Browser Integrations
+
+* Firefox extension support
+* Enhanced browser context capture
+* Cross-browser compatibility improvements
+
+#### Analytics & Intelligence
+
+* Wolfram analytics notebooks
+* Productivity visualization templates
+* Cognitive metrics research
+
+#### Documentation
+
+* Developer guides
+* Architecture documentation
+* Installation tutorials
+* User onboarding content
+
+Whether you're a developer, designer, researcher, or technical writer, there are many ways to contribute to KNEMOS.
 
 ---
 
-## License
+# License
 
-MIT License  see [LICENSE](./LICENSE) for details.
+KNEMOS is released under the **MIT License**.
+
+See the [LICENSE](./LICENSE) file for complete licensing information.
 
 ---
 
-## Acknowledgements
+# Acknowledgements
 
-Built with:
-- [Tauri](https://tauri.app)  Rust-native desktop framework
-- [mxbai-embed-large](https://www.mixedbread.ai/blog/mxbai-embed-large-v1)  High-fidelity local semantic embeddings
-- [HDBSCAN](https://hdbscan.readthedocs.io)  Density-based clustering
-- [ChromaDB](https://www.trychroma.com)  Local vector database
-- [Ollama](https://ollama.ai)  Local LLM inference
-- [Qwen2.5](https://qwenlm.github.io/blog/qwen2.5/)  Local workspace naming LLM (7B / 3B)
-- [Wolfram Language](https://www.wolfram.com/language/)  Computational intelligence
-- [Tesseract OCR](https://github.com/tesseract-ocr/tesseract)  Screen text extraction
-- [psutil](https://psutil.readthedocs.io)  System process monitoring
+KNEMOS is built on top of an exceptional open-source ecosystem.
+
+### Core Technologies
+
+* [Tauri](https://tauri.app) — Rust-native desktop application framework
+* [FastAPI](https://fastapi.tiangolo.com) — High-performance Python backend framework
+* [Ollama](https://ollama.ai) — Local AI model runtime
+
+### AI & Machine Learning
+
+* [mxbai-embed-large](https://www.mixedbread.ai/blog/mxbai-embed-large-v1) — High-fidelity embedding model
+* [Qwen2.5](https://qwenlm.github.io/blog/qwen2.5/) — Local reasoning and workspace naming models
+* [HDBSCAN](https://hdbscan.readthedocs.io) — Density-based semantic clustering
+
+### Data & Search
+
+* [ChromaDB](https://www.trychroma.com) — Local vector database
+* [Tesseract OCR](https://github.com/tesseract-ocr/tesseract) — Screen text extraction and indexing
+
+### Analytics & System Intelligence
+
+* [Wolfram Language](https://www.wolfram.com/language/) — Computational analytics engine
+* [psutil](https://psutil.readthedocs.io) — System monitoring and process insights
 
 ---
 
 <div align="center">
 
-**KNEMOS** · OSC AI Build 1.0 · Future of Productivity Track
+# 🧠 KNEMOS
 
-*The cognitive layer your OS never had.*
+### Knowledge · Mnemonics · Operating System
+
+**OSC AI Build 1.0 · Future of Productivity Track**
+
+*A local-first cognitive operating layer that understands context, preserves memory, and enhances focus.*
+
+**The cognitive layer your operating system never had.**
 
 [knemos.dev](https://knemos.dev) · [GitHub](https://github.com/your-username/KNEMOS)
 
