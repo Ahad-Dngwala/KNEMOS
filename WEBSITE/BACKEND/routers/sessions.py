@@ -13,7 +13,7 @@ from services.wolfram_analytics import compute_focus_score
 
 router = APIRouter()
 
-DB_PATH = "./data/knemos.db"
+from config import DB_PATH
 
 # Current session state (in-memory)
 _current_session = {

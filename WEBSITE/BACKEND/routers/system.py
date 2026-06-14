@@ -14,6 +14,7 @@ import signal
 import threading
 from fastapi import APIRouter, Request
 from pydantic import BaseModel
+from config import DATA_DIR, DB_PATH, CHROMA_PATH
 from services.data_collector import get_ram_stats, get_open_windows, update_browser_tabs, get_processes
 from services.wolfram_analytics import compute_focus_score
 from models.schemas import BrowserTab
@@ -86,6 +87,8 @@ async def focus():
     return await asyncio.to_thread(compute_focus_score)
 
 
+_last_tabs_hash = {}
+
 @router.post("/browser-tabs")
 async def receive_tabs(payload: TabsPayload):
     """Browser Extensions post tabs here."""
@@ -98,8 +101,6 @@ async def receive_tabs(payload: TabsPayload):
     tabs_hash = hashlib.md5(json.dumps(tabs, sort_keys=True).encode()).hexdigest()
     
     global _last_tabs_hash
-    if '_last_tabs_hash' not in globals():
-        _last_tabs_hash = {}
         
     if _last_tabs_hash.get(payload.browser_id) == tabs_hash:
         return {"status": "ok", "received": len(tabs), "skipped": True}
@@ -133,8 +134,8 @@ def get_dir_size(path: str) -> float:
 @router.get("/resources")
 async def get_resources():
     return {
-        "screenshots_mb": round(get_dir_size("./data/screenshots"), 2),
-        "chromadb_mb": round(get_dir_size("./data/chromadb"), 2),
-        "sqlite_mb": round(os.path.getsize("./data/knemos.db") / (1024*1024) if os.path.exists("./data/knemos.db") else 0, 2),
-        "screenshots_path": os.path.abspath("./data/screenshots"),
+        "screenshots_mb": round(get_dir_size(str(DATA_DIR / "screenshots")), 2),
+        "chromadb_mb": round(get_dir_size(CHROMA_PATH), 2),
+        "sqlite_mb": round(os.path.getsize(DB_PATH) / (1024*1024) if os.path.exists(DB_PATH) else 0, 2),
+        "screenshots_path": os.path.abspath(str(DATA_DIR / "screenshots")),
     }

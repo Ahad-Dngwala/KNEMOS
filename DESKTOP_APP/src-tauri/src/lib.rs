@@ -83,8 +83,26 @@ async fn start_backend(app: tauri::AppHandle, state: State<'_, BackendState>) ->
     let log_file_err = log_file.try_clone().unwrap();
 
     let mut cmd;
-    if std::path::Path::new("backend.exe").exists() {
-        cmd = Command::new("backend.exe");
+    
+    // Resolve sidecar path relative to the current executable
+    let mut sidecar_path = std::path::PathBuf::from("backend-x86_64-pc-windows-msvc.exe");
+    if let Ok(exe_path) = std::env::current_exe() {
+        if let Some(parent) = exe_path.parent() {
+            let candidate = parent.join("backend-x86_64-pc-windows-msvc.exe");
+            if candidate.exists() {
+                sidecar_path = candidate;
+            } else {
+                // Development fallback path
+                let candidate2 = std::path::PathBuf::from("../../DESKTOP_APP/src-tauri/bin/backend-x86_64-pc-windows-msvc.exe");
+                if candidate2.exists() {
+                    sidecar_path = candidate2;
+                }
+            }
+        }
+    }
+
+    if sidecar_path.exists() {
+        cmd = Command::new(sidecar_path);
         cmd.args(["--port", &target_port.to_string()]);
     } else {
         // Fallback to python for local development or non-packaged backend

@@ -31,10 +31,10 @@ try:
 except ImportError:
     print("[Memory] pytesseract not installed — OCR disabled")
 
-# Paths
-SCREENSHOTS_DIR = Path("./data/screenshots")
+from config import DATA_DIR
+SCREENSHOTS_DIR = DATA_DIR / "screenshots"
 SCREENSHOTS_DIR.mkdir(parents=True, exist_ok=True)
-DB_PATH = "./data/knemos.db"
+from config import DB_PATH, CHROMA_PATH
 
 # Screenshot retention settings
 MAX_SCREENSHOT_AGE_HOURS = 48
@@ -203,7 +203,7 @@ def _get_chroma_collection():
     if _memory_col is not None:
         return _memory_col
     try:
-        _chroma_client = chromadb.PersistentClient(path="./data/chromadb")
+        _chroma_client = chromadb.PersistentClient(path=CHROMA_PATH)
         # Use versioned collection name to avoid dimension mismatch with old data
         _memory_col = _chroma_client.get_or_create_collection(
             "screen_memory_v2",

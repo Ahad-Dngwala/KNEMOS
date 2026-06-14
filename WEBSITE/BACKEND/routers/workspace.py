@@ -25,7 +25,7 @@ from services.workspace_namer import _try_ollama, MODEL_PRIORITY
 
 router = APIRouter()
 
-DB_PATH = "./data/knemos.db"
+from config import DB_PATH
 
 # SQLite workspace tables
 def _init_db():

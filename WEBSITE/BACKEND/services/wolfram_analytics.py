@@ -17,7 +17,7 @@ import sqlite3
 import time
 import datetime
 
-DB_PATH = "./data/knemos.db"
+from config import DB_PATH
 
 
 def _init_db():
