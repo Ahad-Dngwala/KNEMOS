@@ -111,7 +111,7 @@ export default function DownloadPage() {
             </p>
             {isAuthenticated ? (
               <a 
-                href="https://github.com/Ahad-Dngwala/KnemOS/releases/download/v1.0.0/KNEMOS-Setup.exe" 
+                href="/downloads/KNEMOS-Setup.exe" 
                 download="KNEMOS-Setup.exe"
                 className="inline-block px-8 py-3 bg-black text-white text-xs uppercase tracking-[2px] font-bold hover:bg-[#111] transition-colors"
               >
