@@ -14,11 +14,48 @@ export default function UpdatesPage() {
         </div>
 
         <div className="space-y-12">
-          {/* Version 2.5 Section */}
+          {/* Version 2.6 Section */}
           <div className="bg-white border border-black p-10 relative">
             <div className="absolute top-0 right-0 bg-black text-white px-4 py-1 text-xs font-bold tracking-[2px] uppercase">
               Latest
             </div>
+            <h2 className="text-3xl font-[100] tracking-[-1px] font-display mb-2">v2.6 Security & UX Overhaul</h2>
+            <p className="text-xs text-[#888] tracking-widest uppercase mb-8">Critical Update</p>
+            
+            <div className="space-y-6 text-sm text-[#444] leading-relaxed">
+              <div className="flex gap-4">
+                <span className="text-black font-bold flex-shrink-0 w-8">01</span>
+                <div>
+                  <strong className="text-black">Deep Focus Visual Countdown</strong>
+                  <p>Added a massive visual countdown timer to the Deep Work overlay. The overlay now accurately reflects your global settings (1m, 5m, 15m) and gracefully restores windows and shuts down the watchdog when the timer hits zero, fixing an infinite loop issue.</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <span className="text-black font-bold flex-shrink-0 w-8">02</span>
+                <div>
+                  <strong className="text-black">Dynamic IPC Token Resolution</strong>
+                  <p>Completely rewired the Rust IPC frontend initialization. The desktop app now correctly scans the Windows `%APPDATA%` (Roaming) environment variables to locate the backend authentication token, permanently eliminating the 401 Unauthorized errors on fresh installs.</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <span className="text-black font-bold flex-shrink-0 w-8">03</span>
+                <div>
+                  <strong className="text-black">Production CORS Hardening</strong>
+                  <p>Patched the FastAPI backend to strictly allow `http://tauri.localhost` origins, securing the local IPC loop while fixing network rejections in the final PyInstaller production builds.</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <span className="text-black font-bold flex-shrink-0 w-8">04</span>
+                <div>
+                  <strong className="text-black">Smart Redirect Engine</strong>
+                  <p>The marketing site now features a seamless `next.config.ts` redirect engine that directly points authenticated users to the specific GitHub Release `.exe` without breaking UX.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Version 2.5 Section */}
+          <div className="bg-white border border-[#E0E0E0] p-10 relative">
             <h2 className="text-3xl font-[100] tracking-[-1px] font-display mb-2">v2.5 Production Hardening</h2>
             <p className="text-xs text-[#888] tracking-widest uppercase mb-8">Major Core Update</p>
             

@@ -25,6 +25,43 @@ export default function DocsPage() {
             </p>
           </section>
 
+          <section className="bg-[#f5f5f5] border border-black p-10">
+            <h2 className="text-2xl font-bold tracking-[1px] uppercase mb-6">Step-by-Step Guide (For Beginners)</h2>
+            <p className="text-sm text-[#444] leading-relaxed mb-8">Follow these instructions to get your KNEMOS productivity system up and running in minutes, even if you don't know how to code.</p>
+            
+            <div className="space-y-8">
+              <div className="relative pl-8 border-l-2 border-black">
+                <div className="absolute left-[-9px] top-0 bg-black text-white w-4 h-4 flex items-center justify-center text-[10px] font-bold rounded-full">1</div>
+                <h3 className="font-bold text-lg mb-2">Download & Install the Desktop App</h3>
+                <p className="text-sm text-[#666] leading-relaxed">Sign up or Log in to this website. Once authenticated, navigate to the Downloads section and download `KNEMOS-Setup.exe`. Double-click the file to install it on your Windows computer. This will install both the visible UI and the invisible AI brain.</p>
+              </div>
+
+              <div className="relative pl-8 border-l-2 border-black">
+                <div className="absolute left-[-9px] top-0 bg-black text-white w-4 h-4 flex items-center justify-center text-[10px] font-bold rounded-full">2</div>
+                <h3 className="font-bold text-lg mb-2">Open KNEMOS & Let it Boot</h3>
+                <p className="text-sm text-[#666] leading-relaxed">Launch KNEMOS from your Start Menu. The very first time it boots, it may take a few minutes to silently install the local AI models (Tesseract OCR & ChromaDB vectors) on your computer. You will see a dark loading screen. Do not close it.</p>
+              </div>
+
+              <div className="relative pl-8 border-l-2 border-black">
+                <div className="absolute left-[-9px] top-0 bg-black text-white w-4 h-4 flex items-center justify-center text-[10px] font-bold rounded-full">3</div>
+                <h3 className="font-bold text-lg mb-2">Copy your Secret Authentication Token</h3>
+                <p className="text-sm text-[#666] leading-relaxed">Once the dashboard opens, navigate to the <strong>Settings</strong> panel (the gear icon). Scroll to the bottom and find the "Auth Token" section. Click the button to copy your unique, randomly-generated secure token to your clipboard.</p>
+              </div>
+
+              <div className="relative pl-8 border-l-2 border-black">
+                <div className="absolute left-[-9px] top-0 bg-black text-white w-4 h-4 flex items-center justify-center text-[10px] font-bold rounded-full">4</div>
+                <h3 className="font-bold text-lg mb-2">Install the Chrome Extension</h3>
+                <p className="text-sm text-[#666] leading-relaxed">To allow KNEMOS to track what browser tabs you use (so it can calculate your Focus Score), install the KNEMOS Extension in Google Chrome. Open the extension, paste the token you copied in Step 3, and click "Connect".</p>
+              </div>
+
+              <div className="relative pl-8 border-l-2 border-black">
+                <div className="absolute left-[-9px] top-0 bg-black text-white w-4 h-4 flex items-center justify-center text-[10px] font-bold rounded-full">5</div>
+                <h3 className="font-bold text-lg mb-2">Start Focusing!</h3>
+                <p className="text-sm text-[#666] leading-relaxed">You are all set! Group your tabs and apps into a "Workspace" in the desktop app. Click "Activate Deep Focus" to instantly blackout distractions. Any apps not in your workspace will automatically be minimized to keep you on track!</p>
+              </div>
+            </div>
+          </section>
+
           <section>
             <h2 className="text-2xl font-bold tracking-[1px] uppercase mb-6 border-b border-[#E0E0E0] pb-4">Core Features</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
