@@ -85,17 +85,23 @@ async fn start_backend(app: tauri::AppHandle, state: State<'_, BackendState>) ->
     let mut cmd;
     
     // Resolve sidecar path relative to the current executable
-    let mut sidecar_path = std::path::PathBuf::from("backend-x86_64-pc-windows-msvc.exe");
+    let mut sidecar_path = std::path::PathBuf::from("backend.exe");
     if let Ok(exe_path) = std::env::current_exe() {
         if let Some(parent) = exe_path.parent() {
-            let candidate = parent.join("backend-x86_64-pc-windows-msvc.exe");
-            if candidate.exists() {
-                sidecar_path = candidate;
+            // Check for installed sidecar (Tauri strips target triple)
+            let candidate1 = parent.join("backend.exe");
+            // Check for dev sidecar (with target triple)
+            let candidate2 = parent.join("backend-x86_64-pc-windows-msvc.exe");
+            
+            if candidate1.exists() {
+                sidecar_path = candidate1;
+            } else if candidate2.exists() {
+                sidecar_path = candidate2;
             } else {
                 // Development fallback path
-                let candidate2 = std::path::PathBuf::from("../../DESKTOP_APP/src-tauri/bin/backend-x86_64-pc-windows-msvc.exe");
-                if candidate2.exists() {
-                    sidecar_path = candidate2;
+                let candidate3 = std::path::PathBuf::from("../../DESKTOP_APP/src-tauri/bin/backend-x86_64-pc-windows-msvc.exe");
+                if candidate3.exists() {
+                    sidecar_path = candidate3;
                 }
             }
         }
