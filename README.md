@@ -1019,15 +1019,14 @@ KNEMOS is built on top of an exceptional open-source ecosystem.
 
 <div align="center">
 
-# 🧠 KNEMOS
-
-### Knowledge · Mnemonics · Operating System
+# KNEMOS
 
 **OSC AI Build 1.0 · Future of Productivity Track**
 
 *A local-first cognitive operating layer that understands context, preserves memory, and enhances focus.*
 
 **The cognitive layer your operating system never had.**
+= For more context visit : https://important-wilderness-494.notion.site/KNEMOS-Documentation-37fe27a9e83f803d9385f57edad90e95
 
 [knemos.dev](https://knemos.dev) · [GitHub](https://github.com/your-username/KNEMOS)
 
