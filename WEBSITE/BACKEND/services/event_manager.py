@@ -29,6 +29,8 @@ class EventBus:
         """Fire all handlers registered for event."""
         for handler in self._listeners.get(event, []):
             try:
+                # Handlers may be plain functions or async coroutines; the bus
+                # supports both so services can stay lightweight.
                 result = handler(data)
                 if asyncio.iscoroutine(result):
                     await result

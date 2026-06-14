@@ -25,6 +25,10 @@ interface WorkspaceStore {
 export const useWorkspaceStore = create<WorkspaceStore>(set => ({
   workspaces: [],
   activeWorkspaceId: null,
+  // Replacing the full workspace list keeps the store aligned with the
+  // backend's latest clustering snapshot.
   setWorkspaces: (workspaces) => set({ workspaces }),
+  // The selected workspace is tracked separately so UI panels can switch
+  // focus without mutating the underlying workspace data.
   setActive: (id) => set({ activeWorkspaceId: id }),
 }))

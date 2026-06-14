@@ -23,6 +23,8 @@ def start_scheduler(ws_manager):
     """
 
     #  Register WebSocket broadcast handlers 
+    # These handlers translate domain events into the small message shapes
+    # the desktop app expects over the live WebSocket connection.
     async def _on_capture_complete(screenshot_id: str):
         await ws_manager.broadcast({
             "type": "capture_complete",
@@ -57,6 +59,8 @@ def start_scheduler(ws_manager):
     @scheduler.scheduled_job('interval', seconds=60, id='screenshot')
     async def screenshot_job():
         try:
+            # capture_and_index() performs the expensive local memory-lane
+            # pipeline and returns an id only when a screenshot was stored.
             screenshot_id = capture_and_index()
             if screenshot_id:
                 await event_bus.emit("capture_complete", screenshot_id)
@@ -67,6 +71,8 @@ def start_scheduler(ws_manager):
     async def ram_job():
         try:
             stats = get_ram_stats()
+            # Persist the time series before broadcasting so analytics can
+            # derive trends independently of whether a UI is connected.
             log_ram_snapshot(stats["used_gb"], stats["percent"])
             await event_bus.emit("ram_update", stats)
         except Exception as e:

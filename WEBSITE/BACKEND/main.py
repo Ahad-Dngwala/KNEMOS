@@ -37,6 +37,8 @@ class ConnectionManager:
             try:
                 await conn.send_json(message)
             except Exception:
+                # Defer removal until after the loop so one broken socket
+                # does not mutate the list while we are iterating it.
                 dead.append(conn)
         for d in dead:
             self.connections.remove(d)
@@ -50,6 +52,8 @@ import asyncio
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     #  Startup 
+    # The scheduler is attached here so background jobs start exactly once
+    # with the FastAPI app lifecycle instead of on module import.
     print("[KnemOS] Backend starting up...")
     start_scheduler(manager)
     print("[KnemOS] Ready at http://127.0.0.1:8765")
@@ -102,6 +106,8 @@ async def websocket_endpoint(websocket: WebSocket):
     await manager.connect(websocket)
     try:
         while True:
+            # The backend is mostly server-push; it only expects lightweight
+            # client messages here to keep the socket alive.
             # Keep alive  client can optionally send pings
             data = await websocket.receive_text()
             if data == "ping":

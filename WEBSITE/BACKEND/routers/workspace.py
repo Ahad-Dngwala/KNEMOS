@@ -45,6 +45,8 @@ _cache: dict = {"workspaces": [], "updated_at": 0}
 def _save_workspaces_to_db(workspaces: list[dict]):
     """Persist workspace metadata in SQLite. ChromaDB holds only vectors."""
     conn = sqlite3.connect(DB_PATH)
+    # The table is treated as a snapshot of the latest organize run rather
+    # than an append-only history, which keeps reads simple for the MVP.
     # Clear old workspaces and insert fresh set
     conn.execute("DELETE FROM workspaces")
     for ws in workspaces:
@@ -90,6 +92,8 @@ async def organize():
     """
     windows = get_open_windows()
     tabs = get_browser_tabs()
+    # Both collectors normalize their return values to a shared item shape,
+    # allowing the embedding and clustering pipeline to treat them uniformly.
     all_items = windows + tabs
 
     if len(all_items) < 2:
@@ -114,6 +118,8 @@ async def organize():
     # Name each cluster
     workspaces = []
     for label, items in clusters.items():
+        # The LLM only sees titles here; the original serialized items are
+        # preserved separately so the UI can render full workspace contents.
         ws_name = name_cluster([i.title for i in items])
         ws = {
             "id": str(uuid.uuid4()),
@@ -129,6 +135,8 @@ async def organize():
     workspaces.sort(key=lambda x: x["item_count"], reverse=True)
 
     # Update cache and persist
+    # Cache serves fast in-process reads, while SQLite makes the latest
+    # organize result survive process restarts.
     _cache["workspaces"] = workspaces
     _cache["updated_at"] = int(time.time())
     _save_workspaces_to_db(workspaces)
