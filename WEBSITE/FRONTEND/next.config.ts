@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/downloads/KNEMOS-Setup.exe',
-        destination: 'https://github.com/Ahad-Dngwala/KnemOS/releases/download/KNEMOSv1.0.0/KNEMOS-Setup.exe',
+        destination: 'https://github.com/Ahad-Dngwala/KnemOS/releases/download/KNEMOSv1.0.0/KNEMOS_1.0.0_x64-setup.exe',
         permanent: false,
       },
     ];
