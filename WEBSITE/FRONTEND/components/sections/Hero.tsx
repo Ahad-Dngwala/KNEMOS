@@ -48,7 +48,7 @@ export const Hero = () => {
   const visibleLogs = TERMINAL_LOGS.slice(0, logIndex)
 
   return (
-    <section className="relative min-h-screen bg-white flex flex-col items-center justify-center overflow-hidden pt-20">
+    <section className="relative min-h-screen bg-white flex flex-col items-center justify-center overflow-hidden pt-32 pb-20">
 
       {/* Parallax Floating geometric shapes */}
       <div className="floating-objects absolute inset-0 pointer-events-none opacity-40">
@@ -89,7 +89,7 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-sm tracking-[0.3em] uppercase text-[#888888] mb-6"
+          className="text-sm tracking-[0.3em] uppercase text-[#888888] mb-12"
         >
           AI-Powered Semantic Workspace Operating System
         </motion.p>
@@ -99,7 +99,7 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="w-full max-w-lg mx-auto bg-black text-[#00ff00] font-mono text-[11px] sm:text-xs p-5 rounded-md text-left mb-10 h-[220px] overflow-hidden border border-[#333] shadow-2xl relative"
+          className="w-full max-w-lg mx-auto bg-black text-[#00ff00] font-mono text-[11px] sm:text-xs p-5 rounded-md text-left mb-12 h-[220px] overflow-hidden border border-[#333] shadow-2xl relative mt-8"
         >
           <div className="absolute top-0 left-0 w-full h-6 bg-[#111] border-b border-[#333] flex items-center px-3 gap-2">
             <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></div>
