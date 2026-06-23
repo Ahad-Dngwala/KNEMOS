@@ -2,11 +2,11 @@
 
 
 export const Solution = () => (
-  <section className="bg-white py-20 px-6">
+  <section className="bg-white py-12 px-6">
     <div className="max-w-6xl mx-auto">
-      <div className="black-line"></div>
+      <div className="w-full h-px bg-black mb-16"></div>
 
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_2px_1fr] gap-[60px] items-center mt-20">
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_2px_1fr] gap-[60px] items-center">
 
         {/* Left Side */}
         <div className="text-right pr-5">

@@ -36,11 +36,11 @@ function CountUp({ target, suffix }: { target: number; suffix: string }) {
 }
 
 export const Stats = () => (
-  <section className="bg-white py-24 px-6 relative">
+  <section className="bg-white py-12 px-6 relative">
     <div className="max-w-6xl mx-auto">
-      <div className="black-line"></div>
+      <div className="w-full h-px bg-black mb-12"></div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-[2px] bg-black p-[2px] mb-24">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-[2px] bg-black p-[2px] mb-12">
         {stats.map((s) => (
           <div key={s.label} className="bg-white px-5 py-[60px] text-center relative">
             <div className="text-5xl font-[100] tracking-[-2px] text-black mb-2.5 font-display">
