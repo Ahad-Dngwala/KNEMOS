@@ -48,7 +48,7 @@ export const Hero = () => {
   const visibleLogs = TERMINAL_LOGS.slice(0, logIndex)
 
   return (
-    <section className="relative min-h-screen bg-white flex flex-col items-center justify-center overflow-hidden pt-32 pb-20">
+    <section className="relative bg-white flex flex-col items-center justify-center overflow-hidden pt-[180px] pb-[100px]">
 
       {/* Parallax Floating geometric shapes */}
       <div className="floating-objects absolute inset-0 pointer-events-none opacity-40">
