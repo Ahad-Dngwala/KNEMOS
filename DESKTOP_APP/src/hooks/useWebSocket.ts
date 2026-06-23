@@ -1,4 +1,16 @@
-﻿import { useEffect, useRef } from 'react'
+﻿/*
+ * useWebSocket.ts
+ *
+ * Lightweight WebSocket hook used by the desktop app for real-time updates.
+ * - Connects to a local backend WS endpoint and routes messages into stores.
+ * - Implements reconnect-on-close semantics and a keepalive ping interval.
+ *
+ * This file contains only connection management; message handling delegates
+ * to application stores (workspaces, system). The following comments clarify
+ * lifecycle expectations without changing logic.
+ */
+
+import { useEffect, useRef } from 'react'
 import { useWorkspaceStore } from '../store/workspace.store'
 import { useSystemStore } from '../store/system.store'
 
@@ -10,6 +22,7 @@ export const useWebSocket = () => {
   const { setRAMStats, setFocusScore } = useSystemStore()
 
   const connect = () => {
+    // Avoid creating a second connection if one is already open.
     if (wsRef.current?.readyState === WebSocket.OPEN) return;
 
     const ws = new WebSocket(WS_URL)
@@ -33,7 +46,7 @@ export const useWebSocket = () => {
             setFocusScore(msg.score)
             break
           case 'pong':
-            // keepalive response
+            // keepalive response — used to verify connection health
             break
         }
       } catch (e) {

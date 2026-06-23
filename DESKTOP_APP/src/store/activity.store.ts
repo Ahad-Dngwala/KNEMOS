@@ -35,6 +35,13 @@ interface ActivityState {
 
 const API = 'http://127.0.0.1:8765'
 
+/**
+ * activity.store.ts
+ *
+ * Provides methods to fetch activity timeline and session data from the
+ * backend and to post lightweight activity events. Methods are intentionally
+ * minimal and swallow network errors to avoid disrupting the UI.
+ */
 export const useActivityStore = create<ActivityState>((set) => ({
   timeline: [],
   currentSession: null,

@@ -1,4 +1,20 @@
-// background.js — KNEMOS Extension Service Worker
+/*
+ * background.js — KNEMOS Extension Service Worker
+ *
+ * Responsibilities:
+ * - Discover the locally-running KNEMOS backend (health probe across ports).
+ * - Collect and filter browser tab data and POST to the backend.
+ * - Maintain periodic alarm-based sync and respond to tab events.
+ * - Coordinate tab-group synchronization to map browser groups to server
+ *   workspaces.
+ *
+ * Implementation notes:
+ * - Network calls use short timeouts to avoid blocking the service worker.
+ * - Tab collection is debounced to prevent rapid-fire syncs during bulk
+ *   tab events (see `syncTabs` + `performSync`).
+ *
+ * This file receives only comment additions.
+ */
 
 let activeBackend = 'http://127.0.0.1:8765'
 const SYNC_ALARM = 'knemos-sync'
@@ -25,6 +41,8 @@ async function getBackendUrl() {
 // Utility: Filter and prepare tab data
 // ─────────────────────────────────────────
 function prepareTabs(rawTabs) {
+  // Filter out non-relevant pages (internal browser pages, untitled tabs)
+  // and normalize the data shape before sending to the backend.
   const SKIP_PROTOCOLS = ['chrome://', 'chrome-extension://', 'about:', 'edge://', 'devtools://']
 
   return rawTabs
@@ -210,6 +228,13 @@ function mapColor(c) {
 }
 
 async function syncWorkspaceTabGroups() {
+  // Attempt to align browser tab groups with server-declared workspaces.
+  // Steps:
+  // 1. Fetch workspaces and optional ungroup requests from the backend.
+  // 2. For each server workspace with `auto_sync_tabs`, find matching tabs
+  //    in the browser and group them locally.
+  // 3. Respect `manualUngrouped` to avoid re-grouping user-ungrouped workspaces.
+  // Notes: Uses optimistic grouping and updates `tabGroupMap` in local storage.
   if (isSyncingGroups) return
   isSyncingGroups = true
   try {
