@@ -4,9 +4,43 @@ import { useState } from 'react'
 
 const VERSIONS = [
   {
+    version: 'v2.8',
+    title: 'Premium UX Overhaul',
+    tag: 'Latest',
+    type: 'Major UI/UX Update',
+    date: 'June 2026',
+    items: [
+      {
+        n: '01',
+        title: 'Interactive Hero Terminal',
+        desc: 'Added a highly customized sleek, monochrome terminal simulation replacing static hero text.',
+      },
+      {
+        n: '02',
+        title: 'Magnetic Actions',
+        desc: 'CTA buttons now implement Framer Motion spring physics, smoothly tracking mouse movements.',
+      },
+      {
+        n: '03',
+        title: 'Infinite Tech Marquee',
+        desc: 'A seamless horizontally scrolling marquee added beneath the hero showcasing core technical pillars.',
+      },
+      {
+        n: '04',
+        title: 'Feature Glare Cards',
+        desc: 'Implemented dynamic radial-gradient glare tracking on hover for all feature cards.',
+      },
+      {
+        n: '05',
+        title: 'Custom Cursor Spotlight & Scroll Line',
+        desc: 'Replaced standard pointer with a global inverted-color cursor spotlight and fused native scrollbars into a custom scroll progress line.',
+      },
+    ]
+  },
+  {
     version: 'v2.7',
     title: 'First-Run Setup & UX Polish',
-    tag: 'Latest',
+    tag: null,
     type: 'Major UX Update',
     date: 'June 2026',
     items: [
@@ -125,7 +159,7 @@ const ROADMAP = [
 ]
 
 export default function UpdatesPage() {
-  const [activeVersion, setActiveVersion] = useState('v2.7')
+  const [activeVersion, setActiveVersion] = useState('v2.8')
 
   const current = VERSIONS.find(v => v.version === activeVersion) ?? VERSIONS[0]
 

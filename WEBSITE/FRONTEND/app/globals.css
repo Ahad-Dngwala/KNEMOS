@@ -27,13 +27,23 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-body);
-  /* Hide native scrollbar since we have ScrollLine */
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  /* Use standard scrollbar-width for Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: #000000 #ffffff;
 }
 
-body::-webkit-scrollbar {
-  display: none; /* Chrome, Safari and Opera */
+/* Custom Webkit Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #333333;
 }
 
 /* UI Details from Minimal White */
