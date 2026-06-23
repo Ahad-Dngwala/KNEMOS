@@ -87,43 +87,57 @@ async fn start_backend(app: tauri::AppHandle, state: State<'_, BackendState>) ->
     let log_file_err = log_file.try_clone().unwrap();
 
     let mut cmd;
+    let mut found_sidecar = false;
+    let mut sidecar_path = std::path::PathBuf::new();
     
-    // Resolve sidecar path relative to the current executable
-    let mut sidecar_path = std::path::PathBuf::from("backend.exe");
+    // Resolve sidecar path - search multiple locations
+    let mut candidates: Vec<std::path::PathBuf> = vec![];
+
     if let Ok(exe_path) = std::env::current_exe() {
         if let Some(parent) = exe_path.parent() {
-            // Check for installed sidecar (Tauri strips target triple)
-            let candidate1 = parent.join("backend.exe");
-            // Check for dev sidecar (with target triple)
-            let candidate2 = parent.join("backend-x86_64-pc-windows-msvc.exe");
-            
-            if candidate1.exists() {
-                sidecar_path = candidate1;
-            } else if candidate2.exists() {
-                sidecar_path = candidate2;
-            } else {
-                // Development fallback path
-                let candidate3 = std::path::PathBuf::from("../../DESKTOP_APP/src-tauri/bin/backend-x86_64-pc-windows-msvc.exe");
-                if candidate3.exists() {
-                    sidecar_path = candidate3;
-                }
+            // NSIS/MSI installer places sidecar next to exe
+            candidates.push(parent.join("backend.exe"));
+            candidates.push(parent.join("backend-x86_64-pc-windows-msvc.exe"));
+            // Some Tauri builds use a _up/resources directory
+            candidates.push(parent.join("resources").join("backend.exe"));
+            candidates.push(parent.join("resources").join("backend-x86_64-pc-windows-msvc.exe"));
+            // Sibling directory
+            if let Some(grandparent) = parent.parent() {
+                candidates.push(grandparent.join("backend.exe"));
+                candidates.push(grandparent.join("resources").join("backend.exe"));
             }
         }
     }
+    // Dev fallback - relative to project root
+    candidates.push(std::path::PathBuf::from("src-tauri/binaries/backend-x86_64-pc-windows-msvc.exe"));
+    candidates.push(std::path::PathBuf::from("binaries/backend-x86_64-pc-windows-msvc.exe"));
 
-    if sidecar_path.exists() {
-        cmd = Command::new(sidecar_path);
+    for c in &candidates {
+        println!("[KNEMOS] Checking sidecar: {:?} -> exists={}", c, c.exists());
+        if c.exists() {
+            sidecar_path = c.clone();
+            found_sidecar = true;
+            break;
+        }
+    }
+
+    if found_sidecar {
+        println!("[KNEMOS] Launching sidecar: {:?}", sidecar_path);
+        cmd = Command::new(&sidecar_path);
         cmd.args(["--port", &target_port.to_string()]);
     } else {
-        // Fallback to python for local development or non-packaged backend
+        // Last resort: try python only in dev mode (relative paths only, no hardcoded user paths)
+        println!("[KNEMOS] Sidecar not found. Trying python fallback (dev mode only).");
         cmd = Command::new("python");
-        let fallback_path = "C:/Users/ahadd/Documents/GitHub/Knemos/WEBSITE/BACKEND/main.py";
         let relative_path = "../../WEBSITE/BACKEND/main.py";
-        
         if std::path::Path::new(relative_path).exists() {
             cmd.args([relative_path, "--port", &target_port.to_string()]);
         } else {
-            cmd.args([fallback_path, "--port", &target_port.to_string()]);
+            // Nothing worked — return a clear error instead of crashing silently
+            return Err(format!(
+                "Backend not found. Checked {} locations. Please reinstall KNEMOS.",
+                candidates.len()
+            ));
         }
     }
     

@@ -22,6 +22,7 @@ import { useSystemStore } from './store/system.store'
 
 import { StartupOverlay } from './components/system/StartupOverlay'
 import { BackendBootOverlay } from './components/system/BackendBootOverlay'
+import { DependencySetupOverlay } from './components/system/DependencySetupOverlay'
 
 import { useWorkspaceStore } from './store/workspace.store'
 import { useActivityStore } from './store/activity.store'
@@ -41,6 +42,10 @@ function App() {
 
   const [onboardingDone, setOnboardingDone] = useState(
     () => localStorage.getItem('knemos-onboarded') === 'true'
+  )
+
+  const [depSetupDone, setDepSetupDone] = useState(
+    () => localStorage.getItem('knemos-dep-setup-done') === 'true'
   )
 
   const [bootStatus, setBootStatus] = useState<'checking' | 'starting' | 'ready' | 'error' | 'reconnecting' | 'mismatch'>('checking')
@@ -220,6 +225,11 @@ function App() {
   const handleOnboardingComplete = () => {
     localStorage.setItem('knemos-onboarded', 'true')
     setOnboardingDone(true)
+  }
+
+  // Show dependency setup on very first launch
+  if (!depSetupDone) {
+    return <DependencySetupOverlay onDone={() => setDepSetupDone(true)} />
   }
 
   if (bootStatus !== 'ready') {
