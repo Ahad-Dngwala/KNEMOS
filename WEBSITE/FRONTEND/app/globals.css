@@ -33,16 +33,18 @@ body {
 }
 
 /* Custom Webkit Scrollbar */
-::-webkit-scrollbar {
+html::-webkit-scrollbar, body::-webkit-scrollbar {
   width: 4px;
 }
-::-webkit-scrollbar-track {
+html::-webkit-scrollbar-track, body::-webkit-scrollbar-track {
   background: #ffffff;
+  border-radius: 0;
 }
-::-webkit-scrollbar-thumb {
+html::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb {
   background: #000000;
+  border-radius: 0;
 }
-::-webkit-scrollbar-thumb:hover {
+html::-webkit-scrollbar-thumb:hover, body::-webkit-scrollbar-thumb:hover {
   background: #333333;
 }
 
