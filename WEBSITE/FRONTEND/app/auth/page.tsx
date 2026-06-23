@@ -42,25 +42,25 @@ export default function AuthPage() {
   }
 
   return (
-    <main className="min-h-screen bg-white flex items-center justify-center px-6 relative">
-      <Link href="/" className="absolute top-8 left-8 text-xs font-bold tracking-[2px] uppercase hover:text-[#888] transition-colors flex items-center gap-2 text-black">
+    <main className="min-h-screen bg-background flex items-center justify-center px-6 relative transition-colors duration-300">
+      <Link href="/" className="absolute top-8 left-8 text-xs font-bold tracking-[2px] uppercase text-foreground/50 hover:text-foreground transition-colors flex items-center gap-2">
         <span>←</span> Back to Home
       </Link>
       <div className="w-full max-w-sm">
 
         <div className="flex items-center gap-2 justify-center mb-10">
           <Image src="/KNEMOS.png" alt="KNEMOS" width={32} height={32} className="w-8 h-8" />
-          <span className="font-bold text-lg tracking-widest text-black">KNEMOS</span>
+          <span className="font-bold text-lg tracking-widest text-foreground">KNEMOS</span>
         </div>
 
         {sent ? (
           <div className="text-center">
-            <p className="text-lg font-bold mb-2 text-black">Check your email</p>
-            <p className="text-sm text-[#888]">We sent a magic link to <strong>{email}</strong></p>
+            <p className="text-lg font-bold mb-2 text-foreground">Check your email</p>
+            <p className="text-sm text-foreground/60">We sent a magic link to <strong>{email}</strong></p>
           </div>
         ) : (
           <>
-            <h1 className="text-2xl font-bold text-center mb-8 text-black font-display">Sign In</h1>
+            <h1 className="text-2xl font-bold text-center mb-8 text-foreground font-display">Sign In</h1>
 
             {errorMsg && (
               <div className="bg-red-50 text-red-600 border border-red-200 p-3 text-xs mb-6 text-center">
@@ -75,20 +75,20 @@ export default function AuthPage() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 required
-                className="w-full border border-[#E0E0E0] px-4 py-3 text-sm outline-none focus:border-black transition-colors text-black bg-white"
+                className="w-full border border-border px-4 py-3 text-sm outline-none focus:border-foreground transition-colors text-foreground bg-background"
               />
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-black text-white py-3 text-sm tracking-widest uppercase disabled:opacity-50"
+                className="w-full bg-foreground text-background py-3 text-sm tracking-widest uppercase disabled:opacity-50 hover:opacity-80 transition-opacity"
               >
                 {loading ? 'Sending...' : 'Continue with Email'}
               </button>
             </form>
 
-            <p className="text-center text-xs text-[#888] mt-6">
+            <p className="text-center text-xs text-foreground/60 mt-6">
               Don&apos;t have an account?{' '}
-              <Link href="/signup" className="text-black underline">Sign up</Link>
+              <Link href="/signup" className="text-foreground underline">Sign up</Link>
             </p>
           </>
         )}

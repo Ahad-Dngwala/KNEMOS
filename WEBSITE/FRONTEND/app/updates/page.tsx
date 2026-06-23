@@ -4,9 +4,23 @@ import { useState } from 'react'
 
 const VERSIONS = [
   {
+    version: 'v3.0',
+    title: 'The Apple-Tier Overhaul',
+    tag: 'Latest',
+    type: 'Major UI/UX Update',
+    date: 'June 2026',
+    items: [
+      { n: '01', title: 'Fluid Dark Mode', desc: 'Seamlessly toggle between Light and Dark mode using next-themes and Lucide icons in the navbar. Entire UI inverts perfectly.' },
+      { n: '02', title: 'Native Page Transitions', desc: 'Framer Motion AnimatePresence now wraps the app router, causing routes to slide and fade in buttery smooth.' },
+      { n: '03', title: 'Scroll Reveals & CountUp', desc: 'Added whileInView motion triggers to all major sections, plus a spring-animated CountUp module for live stats.' },
+      { n: '04', title: 'Product Showcase Reel', desc: 'A gorgeous new 16:9 cinematic video container on the homepage to showcase KNEMOS in action.' },
+      { n: '05', title: 'Interactive Pricing', desc: 'Pricing page now features an animated Monthly/Yearly toggle with 3D rolling price changes.' },
+    ]
+  },
+  {
     version: 'v2.8',
     title: 'Premium UX Overhaul',
-    tag: 'Latest',
+    tag: null,
     type: 'Major UI/UX Update',
     date: 'June 2026',
     items: [
@@ -159,21 +173,21 @@ const ROADMAP = [
 ]
 
 export default function UpdatesPage() {
-  const [activeVersion, setActiveVersion] = useState('v2.8')
+  const [activeVersion, setActiveVersion] = useState('v3.0')
 
   const current = VERSIONS.find(v => v.version === activeVersion) ?? VERSIONS[0]
 
   return (
-    <main className="min-h-screen bg-[#fafafa] py-24 px-6 relative text-black">
-      <Link href="/" className="absolute top-8 left-8 text-xs font-bold tracking-[2px] uppercase hover:text-[#888] transition-colors flex items-center gap-2">
+    <main className="min-h-screen bg-background py-24 px-6 relative text-foreground transition-colors duration-300">
+      <Link href="/" className="absolute top-8 left-8 text-xs font-bold tracking-[2px] uppercase text-foreground/50 hover:text-foreground transition-colors flex items-center gap-2">
         <span>←</span> Back to Home
       </Link>
 
       <div className="max-w-5xl mx-auto mt-8">
         {/* Header */}
         <div className="text-center mb-16 relative">
-          <h1 className="text-6xl font-[100] tracking-[-2px] font-display text-black mb-4">Release Updates</h1>
-          <div className="w-[30px] h-[30px] border border-black rotate-45 mx-auto" />
+          <h1 className="text-6xl font-[100] tracking-[-2px] font-display text-foreground mb-4">Release Updates</h1>
+          <div className="w-[30px] h-[30px] border border-foreground rotate-45 mx-auto" />
         </div>
 
         {/* Version Switcher Tabs */}
@@ -184,8 +198,8 @@ export default function UpdatesPage() {
               onClick={() => setActiveVersion(v.version)}
               className={`flex-shrink-0 px-5 py-2 text-xs font-bold tracking-[2px] uppercase border transition-all ${
                 activeVersion === v.version
-                  ? 'bg-black text-white border-black'
-                  : 'bg-white text-black border-[#E0E0E0] hover:border-black'
+                  ? 'bg-foreground text-background border-foreground'
+                  : 'bg-background text-foreground border-border hover:border-foreground'
               }`}
             >
               {v.version} {v.tag && <span className="ml-1 opacity-60">★</span>}
@@ -197,9 +211,9 @@ export default function UpdatesPage() {
           {/* Left: Release detail */}
           <div className="space-y-8">
             {/* Version Card */}
-            <div className="bg-white border border-black p-10 relative">
+            <div className="bg-background border border-foreground p-10 relative">
               {current.tag && (
-                <div className="absolute top-0 right-0 bg-black text-white px-4 py-1 text-xs font-bold tracking-[2px] uppercase">
+                <div className="absolute top-0 right-0 bg-foreground text-background px-4 py-1 text-xs font-bold tracking-[2px] uppercase">
                   {current.tag}
                 </div>
               )}
@@ -210,12 +224,12 @@ export default function UpdatesPage() {
                 <p className="text-xs text-[#888]">{current.date}</p>
               </div>
 
-              <div className="space-y-6 text-sm text-[#444] leading-relaxed">
+              <div className="space-y-6 text-sm text-foreground/80 leading-relaxed">
                 {current.items.map(item => (
                   <div key={item.n} className="flex gap-4 group">
-                    <span className="text-black font-bold flex-shrink-0 w-8 group-hover:text-[#888] transition-colors">{item.n}</span>
+                    <span className="text-foreground font-bold flex-shrink-0 w-8 group-hover:text-foreground/50 transition-colors">{item.n}</span>
                     <div>
-                      <strong className="text-black">{item.title}</strong>
+                      <strong className="text-foreground">{item.title}</strong>
                       <p className="mt-1">{item.desc}</p>
                     </div>
                   </div>
@@ -225,7 +239,7 @@ export default function UpdatesPage() {
 
             {/* Commit Log */}
             <div>
-              <h3 className="text-xl font-bold tracking-[1px] uppercase mb-6 border-b border-[#E0E0E0] pb-4">Commit Log</h3>
+              <h3 className="text-xl font-bold tracking-[1px] uppercase mb-6 border-b border-border pb-4 text-foreground">Commit Log</h3>
               <div className="space-y-1">
                 {COMMITS.map((commit, idx) => (
                   <a
@@ -233,13 +247,13 @@ export default function UpdatesPage() {
                     href={`https://github.com/Ahad-Dngwala/KNEMOS/commit/${commit.hash}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-4 py-3 border-b border-[#F0F0F0] hover:bg-white transition-colors px-3 group"
+                    className="flex items-center gap-4 py-3 border-b border-border/50 hover:bg-foreground/5 transition-colors px-3 group"
                   >
-                    <span className="font-mono text-xs bg-[#f5f5f5] border border-[#E0E0E0] px-2 py-1 text-[#666] flex-shrink-0 group-hover:border-black transition-colors">
+                    <span className="font-mono text-xs bg-foreground/5 border border-border px-2 py-1 text-foreground/60 flex-shrink-0 group-hover:border-foreground transition-colors">
                       {commit.hash}
                     </span>
-                    <span className="text-sm text-black group-hover:underline">{commit.msg}</span>
-                    <span className="ml-auto text-[#CCC] group-hover:text-black transition-colors flex-shrink-0">↗</span>
+                    <span className="text-sm text-foreground group-hover:underline">{commit.msg}</span>
+                    <span className="ml-auto text-foreground/30 group-hover:text-foreground transition-colors flex-shrink-0">↗</span>
                   </a>
                 ))}
               </div>
@@ -249,13 +263,13 @@ export default function UpdatesPage() {
           {/* Right: Sidebar */}
           <div className="space-y-6">
             {/* Stats */}
-            <div className="bg-black text-white p-8">
+            <div className="bg-black text-white dark:bg-[#111] p-8 transition-colors duration-300">
               <div className="text-xs uppercase tracking-[2px] font-bold mb-6 opacity-50">Project Stats</div>
               <div className="space-y-5">
                 {[
-                  { label: 'Total Versions', value: '3' },
-                  { label: 'Commits', value: '40+' },
-                  { label: 'Components', value: '50+' },
+                  { label: 'Total Versions', value: '4' },
+                  { label: 'Commits', value: '50+' },
+                  { label: 'Components', value: '55+' },
                   { label: 'API Endpoints', value: '25+' },
                   { label: 'Languages', value: 'Py · Rust · TS' },
                 ].map(s => (
@@ -268,9 +282,9 @@ export default function UpdatesPage() {
             </div>
 
             {/* What's Next */}
-            <div className="bg-white border border-[#E0E0E0] p-6">
-              <div className="text-xs uppercase tracking-[2px] font-bold mb-1">What&apos;s Next</div>
-              <p className="text-xs text-[#888] mb-5">Upcoming features in development</p>
+            <div className="bg-background border border-border p-6">
+              <div className="text-xs uppercase tracking-[2px] font-bold mb-1 text-foreground">What&apos;s Next</div>
+              <p className="text-xs text-foreground/50 mb-5">Upcoming features in development</p>
               <div className="space-y-3">
                 {[
                   { label: 'Focus Streak Notifications', status: 'Planned' },
@@ -279,9 +293,9 @@ export default function UpdatesPage() {
                   { label: 'Custom Workspace Themes', status: 'Planned' },
                 ].map(item => (
                   <div key={item.label} className="flex items-center justify-between">
-                    <span className="text-xs text-[#444]">{item.label}</span>
+                    <span className="text-xs text-foreground/80">{item.label}</span>
                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
-                      item.status === 'In Progress' ? 'bg-black text-white' : 'bg-[#f5f5f5] text-[#888]'
+                      item.status === 'In Progress' ? 'bg-foreground text-background' : 'bg-foreground/5 text-foreground/50'
                     }`}>
                       {item.status}
                     </span>
@@ -291,12 +305,12 @@ export default function UpdatesPage() {
             </div>
 
             {/* Download CTA */}
-            <div className="bg-white border border-black p-6 text-center">
-              <div className="text-xs uppercase tracking-[2px] font-bold mb-2">Get the Latest</div>
-              <p className="text-xs text-[#666] mb-5">Download KNEMOS {VERSIONS[0].version} for Windows</p>
+            <div className="bg-background border border-border p-6 text-center">
+              <div className="text-xs uppercase tracking-[2px] font-bold mb-2 text-foreground">Get the Latest</div>
+              <p className="text-xs text-foreground/60 mb-5">Download KNEMOS {VERSIONS[0].version} for Windows</p>
               <Link
                 href="/download"
-                className="block w-full bg-black text-white text-xs font-bold tracking-[2px] uppercase py-3 hover:bg-[#111] transition-colors"
+                className="block w-full bg-foreground text-background text-xs font-bold tracking-[2px] uppercase py-3 hover:opacity-80 transition-colors"
               >
                 Download Now
               </Link>
@@ -306,29 +320,29 @@ export default function UpdatesPage() {
 
         {/* Roadmap Section */}
         <div className="mt-16">
-          <h3 className="text-2xl font-bold tracking-[1px] uppercase mb-2 border-b border-[#E0E0E0] pb-4">
+          <h3 className="text-2xl font-bold tracking-[1px] uppercase mb-2 border-b border-border pb-4 text-foreground">
             Product Roadmap
           </h3>
-          <p className="text-sm text-[#888] mb-8">Features we are actively planning or building next.</p>
+          <p className="text-sm text-foreground/50 mb-8">Features we are actively planning or building next.</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {ROADMAP.map(item => (
               <div
                 key={item.title}
-                className="bg-white border border-[#E0E0E0] p-6 hover:border-black transition-colors group"
+                className="bg-background border border-border p-6 transition-all duration-300 group hover:border-foreground hover:ring-1 hover:ring-foreground"
               >
                 <div className="flex items-start justify-between gap-2 mb-2">
-                  <h4 className="font-bold text-sm">{item.title}</h4>
+                  <h4 className="font-bold text-sm text-foreground">{item.title}</h4>
                   <span className={`text-[10px] font-bold px-2 py-0.5 flex-shrink-0 ${
                     item.status === 'In Progress'
-                      ? 'bg-black text-white'
+                      ? 'bg-foreground text-background'
                       : item.status === 'Exploring'
-                      ? 'bg-[#f0f0f0] text-[#888]'
-                      : 'border border-[#E0E0E0] text-[#888]'
+                      ? 'bg-foreground/5 text-foreground/50'
+                      : 'border border-border text-foreground/50'
                   }`}>
                     {item.status}
                   </span>
                 </div>
-                <p className="text-xs text-[#666] leading-relaxed">{item.desc}</p>
+                <p className="text-xs text-foreground/60 leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>

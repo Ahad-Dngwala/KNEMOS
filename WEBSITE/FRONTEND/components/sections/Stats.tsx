@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
-import { useInView } from 'framer-motion'
+import { useInView, motion } from 'framer-motion'
 
 const stats = [
   { value: 40,   suffix: '+',  label: 'Browser tabs open, average session' },
@@ -36,22 +36,28 @@ function CountUp({ target, suffix }: { target: number; suffix: string }) {
 }
 
 export const Stats = () => (
-  <section className="bg-white py-12 px-6 relative">
+  <section className="bg-white dark:bg-black py-12 px-6 relative transition-colors duration-300">
     <div className="max-w-6xl mx-auto">
-      <div className="w-full h-px bg-black mb-12"></div>
+      <div className="w-full h-px bg-black dark:bg-[#333] mb-12"></div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-[2px] bg-black p-[2px] mb-12">
+      <motion.div 
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6 }}
+        className="grid grid-cols-2 md:grid-cols-4 gap-[2px] bg-black dark:bg-[#333] p-[2px] mb-12"
+      >
         {stats.map((s) => (
-          <div key={s.label} className="bg-white px-5 py-[60px] text-center relative">
-            <div className="text-5xl font-[100] tracking-[-2px] text-black mb-2.5 font-display">
+          <div key={s.label} className="bg-white dark:bg-[#111] px-5 py-[60px] text-center relative transition-colors duration-300">
+            <div className="text-5xl font-[100] tracking-[-2px] text-black dark:text-white mb-2.5 font-display">
               <CountUp target={s.value} suffix={s.suffix} />
             </div>
-            <p className="text-xs tracking-[2px] uppercase font-medium text-black leading-snug">{s.label}</p>
+            <p className="text-xs tracking-[2px] uppercase font-medium text-black dark:text-white leading-snug">{s.label}</p>
             {/* Corner decoration similar to template */}
-            <div className="absolute top-5 right-5 w-5 h-5 border border-black rotate-45"></div>
+            <div className="absolute top-5 right-5 w-5 h-5 border border-black dark:border-white rotate-45"></div>
           </div>
         ))}
-      </div>
+      </motion.div>
     </div>
   </section>
 )

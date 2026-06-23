@@ -24,10 +24,16 @@ const FeatureCard = ({ f, i }: { f: any, i: number }) => {
   const isDark = i % 2 !== 0
 
   return (
-    <div
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, y: 30 },
+        visible: { opacity: 1, y: 0 }
+      }}
       onMouseMove={handleMouseMove}
-      className={`relative overflow-hidden p-[60px_20px] border-r border-b border-black transition-all duration-300 group cursor-default ${
-        isDark ? 'bg-black text-white hover:text-black' : 'bg-white text-black hover:text-white'
+      className={`relative overflow-hidden p-[60px_20px] border-r border-b border-black dark:border-[#333] transition-all duration-300 group cursor-default ${
+        isDark 
+          ? 'bg-black text-white hover:text-black dark:hover:text-black' 
+          : 'bg-white text-black hover:text-white dark:bg-[#111] dark:text-white dark:hover:bg-white dark:hover:text-black'
       }`}
     >
       {/* Glare effect */}
@@ -49,25 +55,35 @@ const FeatureCard = ({ f, i }: { f: any, i: number }) => {
         <h4 className="text-sm tracking-[2px] uppercase font-medium mb-3 text-inherit transition-colors">{f.title}</h4>
         <p className="text-xs text-[#888] group-hover:text-inherit transition-colors">{f.desc}</p>
       </div>
-    </div>
+    </motion.div>
   )
 }
 
 export const Features = () => (
-  <section id="features" className="bg-white py-20 px-6 text-center">
+  <section id="features" className="bg-white dark:bg-black py-20 px-6 text-center transition-colors duration-300">
     <div className="max-w-6xl mx-auto">
       
       <div className="flex items-center justify-center gap-[30px] mb-[60px]">
-        <div className="w-[15px] h-[15px] bg-black"></div>
-        <h2 className="text-5xl font-[100] tracking-[-1px] font-display text-black">Features</h2>
-        <div className="w-[15px] h-[15px] bg-black"></div>
+        <div className="w-[15px] h-[15px] bg-black dark:bg-white"></div>
+        <h2 className="text-5xl font-[100] tracking-[-1px] font-display text-black dark:text-white">Features</h2>
+        <div className="w-[15px] h-[15px] bg-black dark:bg-white"></div>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-0 border-l border-t border-black">
+      <motion.div 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={{
+          visible: {
+            transition: { staggerChildren: 0.1 }
+          }
+        }}
+        className="grid grid-cols-2 md:grid-cols-3 gap-0 border-l border-t border-black dark:border-[#333]"
+      >
         {features.map((f, i) => (
           <FeatureCard key={f.num} f={f} i={i} />
         ))}
-      </div>
+      </motion.div>
     </div>
   </section>
 )

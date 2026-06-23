@@ -39,7 +39,7 @@ export default function DownloadPage() {
   }, [])
 
   return (
-    <main className="min-h-screen bg-[#fafafa] flex items-center justify-center py-24 px-6 relative text-black">
+    <main className="min-h-screen bg-[#fafafa] dark:bg-black flex items-center justify-center py-24 px-6 relative text-black dark:text-white transition-colors duration-300">
       <Suspense fallback={null}>
         <DeepLinkHandler />
       </Suspense>
@@ -57,18 +57,18 @@ export default function DownloadPage() {
         </div>
 
         {/* Auth Status Banner */}
-        <div className="mb-8 border border-black p-4 flex items-center justify-between bg-white">
+        <div className="mb-8 border border-black dark:border-white p-4 flex items-center justify-between bg-white dark:bg-[#111]">
           {!loadingAuth && !isAuthenticated ? (
             <>
               <div>
-                <p className="text-sm font-bold text-black">Sign in required to download</p>
-                <p className="text-xs text-[#666] mt-1">Create a free account to access all downloads.</p>
+                <p className="text-sm font-bold text-black dark:text-white">Sign in required to download</p>
+                <p className="text-xs text-[#666] dark:text-[#999] mt-1">Create a free account to access all downloads.</p>
               </div>
               <div className="flex gap-4">
-                <Link href="/signin" className="text-xs uppercase tracking-[2px] font-bold border border-black px-4 py-2 hover:bg-[#f5f5f5] transition-colors text-black">
+                <Link href="/signin" className="text-xs uppercase tracking-[2px] font-bold border border-black dark:border-white px-4 py-2 hover:bg-[#f5f5f5] dark:hover:bg-[#222] transition-colors text-black dark:text-white">
                   Sign In
                 </Link>
-                <Link href="/signup" className="text-xs uppercase tracking-[2px] font-bold bg-black text-white px-4 py-2 hover:bg-[#111] transition-colors">
+                <Link href="/signup" className="text-xs uppercase tracking-[2px] font-bold bg-black dark:bg-white text-white dark:text-black px-4 py-2 hover:bg-[#111] dark:hover:bg-[#ddd] transition-colors">
                   Sign Up Free
                 </Link>
               </div>
@@ -76,11 +76,11 @@ export default function DownloadPage() {
           ) : !loadingAuth && isAuthenticated ? (
             <>
               <div>
-                <p className="text-sm font-bold text-black flex items-center gap-2">
+                <p className="text-sm font-bold text-black dark:text-white flex items-center gap-2">
                   <span className="w-2 h-2 bg-green-500 rounded-full"></span>
                   Authenticated
                 </p>
-                <p className="text-xs text-[#666] mt-1">You have access to all downloads.</p>
+                <p className="text-xs text-[#666] dark:text-[#999] mt-1">You have access to all downloads.</p>
               </div>
               <div>
                 <button 
@@ -89,7 +89,7 @@ export default function DownloadPage() {
                     await supabase.auth.signOut();
                     setIsAuthenticated(false);
                   }}
-                  className="text-xs uppercase tracking-[2px] font-bold border border-black px-4 py-2 hover:bg-[#f5f5f5] transition-colors text-black"
+                  className="text-xs uppercase tracking-[2px] font-bold border border-black dark:border-white px-4 py-2 hover:bg-[#f5f5f5] dark:hover:bg-[#222] transition-colors text-black dark:text-white"
                 >
                   Sign Out
                 </button>
@@ -97,23 +97,23 @@ export default function DownloadPage() {
             </>
           ) : (
             <div>
-              <p className="text-sm font-bold text-black">Checking auth...</p>
+              <p className="text-sm font-bold text-black dark:text-white">Checking auth...</p>
             </div>
           )}
         </div>
 
         {/* Desktop App */}
         <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-[2px] mb-[2px]">
-          <div className="bg-white p-12 border border-black relative group hover:-translate-y-1 transition-transform">
-            <h3 className="text-3xl font-[100] tracking-[-1px] font-display text-black mb-4">Desktop App</h3>
-            <p className="text-sm text-[#666] leading-relaxed mb-8">
+          <div className="bg-white dark:bg-[#111] p-12 border border-black dark:border-white relative group hover:-translate-y-1 transition-transform">
+            <h3 className="text-3xl font-[100] tracking-[-1px] font-display text-black dark:text-white mb-4">Desktop App</h3>
+            <p className="text-sm text-[#666] dark:text-[#999] leading-relaxed mb-8">
               The core operating layer for Windows 10/11. Requires local installation of Ollama and Tesseract OCR for maximum offline privacy.
             </p>
             {isAuthenticated ? (
               <a 
                 href="/downloads/KNEMOS-Setup.exe" 
                 download="KNEMOS-Setup.exe"
-                className="inline-block px-8 py-3 bg-black text-white text-xs uppercase tracking-[2px] font-bold hover:bg-[#111] transition-colors"
+                className="inline-block px-8 py-3 bg-black dark:bg-white text-white dark:text-black text-xs uppercase tracking-[2px] font-bold hover:bg-[#111] dark:hover:bg-[#ddd] transition-colors"
               >
                 Download .exe
               </a>
@@ -127,13 +127,13 @@ export default function DownloadPage() {
                 </button>
                 {!loadingAuth && (
                   <p className="text-xs text-[#888]">
-                    <Link href="/signin" className="underline hover:text-black">Sign in</Link> to download
+                    <Link href="/signin" className="underline hover:text-black dark:hover:text-white">Sign in</Link> to download
                   </p>
                 )}
               </div>
             )}
           </div>
-          <div className="bg-black text-white p-12 flex flex-col justify-center items-center text-center">
+          <div className="bg-black text-white p-12 flex flex-col justify-center items-center text-center border border-black dark:border-white">
             <div className="text-5xl font-[100] font-display mb-4">01</div>
             <h4 className="text-xs uppercase tracking-[2px] font-bold">Core System</h4>
           </div>
@@ -141,20 +141,20 @@ export default function DownloadPage() {
 
         {/* Browser Extension */}
         <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-[2px] mb-[2px]">
-          <div className="bg-black text-white p-12 flex flex-col justify-center items-center text-center">
+          <div className="bg-black text-white p-12 flex flex-col justify-center items-center text-center border border-black dark:border-white">
             <div className="text-5xl font-[100] font-display mb-4">02</div>
             <h4 className="text-xs uppercase tracking-[2px] font-bold">Extension</h4>
           </div>
-          <div className="bg-white p-12 border border-black relative group hover:-translate-y-1 transition-transform">
-            <h3 className="text-3xl font-[100] tracking-[-1px] font-display text-black mb-4">Browser Extension</h3>
-            <p className="text-sm text-[#666] leading-relaxed mb-8">
+          <div className="bg-white dark:bg-[#111] p-12 border border-black dark:border-white relative group hover:-translate-y-1 transition-transform">
+            <h3 className="text-3xl font-[100] tracking-[-1px] font-display text-black dark:text-white mb-4">Browser Extension</h3>
+            <p className="text-sm text-[#666] dark:text-[#999] leading-relaxed mb-8">
               Chrome & Edge extension to feed your active tabs into the KNEMOS semantic memory pipeline. Optional, but highly recommended.
             </p>
             {isAuthenticated ? (
               <a 
                 href="/downloads/KNEMOS-Extension.zip" 
                 download
-                className="inline-block px-8 py-3 border-2 border-black text-xs uppercase tracking-[2px] font-bold text-black hover:bg-black hover:text-white transition-colors"
+                className="inline-block px-8 py-3 border-2 border-black dark:border-white text-xs uppercase tracking-[2px] font-bold text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-colors"
               >
                 Download .zip
               </a>

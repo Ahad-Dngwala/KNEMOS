@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
 import { CursorSpotlight } from "@/components/ui/CursorSpotlight";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-display",
@@ -30,10 +31,13 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${spaceGrotesk.variable} ${inter.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-white text-black font-sans">
-        <CursorSpotlight />
-        {children}
+      <body className="min-h-full flex flex-col bg-background text-foreground font-sans transition-colors duration-300">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <CursorSpotlight />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

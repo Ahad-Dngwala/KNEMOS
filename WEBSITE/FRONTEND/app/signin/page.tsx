@@ -55,82 +55,82 @@ function SignInForm() {
     <>
       <div className="flex items-center gap-2 justify-center mb-10">
         <Image src="/KNEMOS.png" alt="KNEMOS" width={32} height={32} className="w-8 h-8" />
-        <span className="font-bold text-lg tracking-widest text-black">KNEMOS</span>
+        <span className="font-bold text-lg tracking-widest text-foreground">KNEMOS</span>
       </div>
 
       {token ? (
         <div className="text-center space-y-6">
-          <div className="w-16 h-16 border border-black mx-auto flex items-center justify-center bg-black text-white">
+          <div className="w-16 h-16 border border-foreground mx-auto flex items-center justify-center bg-foreground text-background">
             <span className="text-2xl">✓</span>
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-black font-display mb-2">Authenticated</h1>
-            <p className="text-sm text-[#666]">Your login was successful.</p>
+            <h1 className="text-2xl font-bold text-foreground font-display mb-2">Authenticated</h1>
+            <p className="text-sm text-foreground/60">Your login was successful.</p>
           </div>
 
-          <div className="border border-[#E0E0E0] p-6 text-left space-y-4">
-            <p className="text-xs font-bold tracking-[2px] uppercase text-black">Your Auth Token</p>
+          <div className="border border-border p-6 text-left space-y-4">
+            <p className="text-xs font-bold tracking-[2px] uppercase text-foreground">Your Auth Token</p>
             
             <div className="flex items-center gap-2">
               <input
                 type="text"
                 readOnly
                 value={token}
-                className="w-full border border-[#E0E0E0] px-4 py-3 text-sm outline-none text-black bg-[#fafafa] font-mono"
+                className="w-full border border-border px-4 py-3 text-sm outline-none text-foreground bg-foreground/5 font-mono"
               />
               <button
                 onClick={handleCopyToken}
-                className="bg-black text-white px-6 py-3 text-xs tracking-widest uppercase hover:bg-[#222] transition-colors"
+                className="bg-foreground text-background px-6 py-3 text-xs tracking-widest uppercase hover:opacity-80 transition-opacity"
               >
                 {copied ? 'Copied' : 'Copy'}
               </button>
             </div>
             
-            <div className="space-y-3 text-sm text-[#444] mt-6">
-              <p className="text-xs font-bold tracking-[2px] uppercase text-black">Next Steps</p>
+            <div className="space-y-3 text-sm text-foreground/80 mt-6">
+              <p className="text-xs font-bold tracking-[2px] uppercase text-foreground">Next Steps</p>
               <div className="flex gap-3">
-                <span className="text-black font-bold flex-shrink-0">01</span>
+                <span className="text-foreground font-bold flex-shrink-0">01</span>
                 <span>Copy the token above.</span>
               </div>
               <div className="flex gap-3">
-                <span className="text-black font-bold flex-shrink-0">02</span>
+                <span className="text-foreground font-bold flex-shrink-0">02</span>
                 <span>Paste it into <strong>KNEMOS Desktop App → Settings → Auth Token</strong></span>
               </div>
               <div className="flex gap-3">
-                <span className="text-black font-bold flex-shrink-0">03</span>
+                <span className="text-foreground font-bold flex-shrink-0">03</span>
                 <span>Paste it into <strong>KNEMOS Browser Extension → Settings</strong></span>
               </div>
               <div className="flex gap-3">
-                <span className="text-black font-bold flex-shrink-0">04</span>
-                <span><Link href="/download" className="underline text-black">Download KNEMOS</Link> if you haven't already.</span>
+                <span className="text-foreground font-bold flex-shrink-0">04</span>
+                <span><Link href="/download" className="underline text-foreground">Download KNEMOS</Link> if you haven't already.</span>
               </div>
             </div>
           </div>
         </div>
       ) : sent ? (
         <div className="text-center space-y-6">
-          <div className="w-16 h-16 border border-black rotate-45 mx-auto flex items-center justify-center">
+          <div className="w-16 h-16 border border-foreground rotate-45 mx-auto flex items-center justify-center text-foreground">
             <span className="-rotate-45 text-2xl">✓</span>
           </div>
           <div>
-            <p className="text-lg font-bold mb-2 text-black">Check your email</p>
-            <p className="text-sm text-[#888]">We sent a magic link to <strong>{email}</strong></p>
+            <p className="text-lg font-bold mb-2 text-foreground">Check your email</p>
+            <p className="text-sm text-foreground/60">We sent a magic link to <strong>{email}</strong></p>
           </div>
 
-          <div className="border border-[#E0E0E0] p-6 text-left space-y-4">
-            <p className="text-xs font-bold tracking-[2px] uppercase text-black">Setup Instructions</p>
+          <div className="border border-border p-6 text-left space-y-4">
+            <p className="text-xs font-bold tracking-[2px] uppercase text-foreground">Setup Instructions</p>
             
-            <div className="space-y-3 text-sm text-[#444]">
+            <div className="space-y-3 text-sm text-foreground/80">
               <div className="flex gap-3">
-                <span className="text-black font-bold flex-shrink-0">01</span>
+                <span className="text-foreground font-bold flex-shrink-0">01</span>
                 <span>After clicking the magic link, your auth token will be displayed on this page.</span>
               </div>
               <div className="flex gap-3">
-                <span className="text-black font-bold flex-shrink-0">02</span>
+                <span className="text-foreground font-bold flex-shrink-0">02</span>
                 <span>Copy the token and paste it into <strong>KNEMOS Desktop App → Settings → Auth Token</strong></span>
               </div>
               <div className="flex gap-3">
-                <span className="text-black font-bold flex-shrink-0">03</span>
+                <span className="text-foreground font-bold flex-shrink-0">03</span>
                 <span>Paste the same token into your <strong>KNEMOS Browser Extension → Settings</strong></span>
               </div>
             </div>
@@ -139,8 +139,8 @@ function SignInForm() {
       ) : (
         <>
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-black font-display mb-2">Welcome Back</h1>
-            <p className="text-sm text-[#666]">Sign in to access your KNEMOS auth token.</p>
+            <h1 className="text-2xl font-bold text-foreground font-display mb-2">Welcome Back</h1>
+            <p className="text-sm text-foreground/60">Sign in to access your KNEMOS auth token.</p>
           </div>
 
           {errorMsg && (
@@ -156,20 +156,20 @@ function SignInForm() {
               value={email}
               onChange={e => setEmail(e.target.value)}
               required
-              className="w-full border border-[#E0E0E0] px-4 py-3 text-sm outline-none focus:border-black transition-colors text-black bg-white"
+              className="w-full border border-border px-4 py-3 text-sm outline-none focus:border-foreground transition-colors text-foreground bg-background"
             />
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-black text-white py-3 text-sm tracking-widest uppercase disabled:opacity-50"
+              className="w-full bg-foreground text-background py-3 text-sm tracking-widest uppercase disabled:opacity-50 hover:opacity-80 transition-opacity"
             >
               {loading ? 'Sending...' : 'Send Magic Link'}
             </button>
           </form>
 
-          <p className="text-center text-xs text-[#888] mt-6">
+          <p className="text-center text-xs text-foreground/60 mt-6">
             Don&apos;t have an account?{' '}
-            <Link href="/signup" className="text-black underline">Sign up</Link>
+            <Link href="/signup" className="text-foreground underline">Sign up</Link>
           </p>
         </>
       )}
@@ -179,8 +179,8 @@ function SignInForm() {
 
 export default function SignInPage() {
   return (
-    <main className="min-h-screen bg-white flex items-center justify-center px-6 relative">
-      <Link href="/" className="absolute top-8 left-8 text-xs font-bold tracking-[2px] uppercase hover:text-[#888] transition-colors flex items-center gap-2 text-black">
+    <main className="min-h-screen bg-background flex items-center justify-center px-6 relative transition-colors duration-300">
+      <Link href="/" className="absolute top-8 left-8 text-xs font-bold tracking-[2px] uppercase text-foreground/50 hover:text-foreground transition-colors flex items-center gap-2">
         <span>←</span> Back to Home
       </Link>
       

@@ -48,14 +48,14 @@ export const Hero = () => {
   const visibleLogs = TERMINAL_LOGS.slice(0, logIndex)
 
   return (
-    <section className="relative bg-white flex flex-col items-center justify-center overflow-hidden pt-[130px] pb-[100px]">
+    <section className="relative bg-background flex flex-col items-center justify-center overflow-hidden pt-[130px] pb-[100px] transition-colors duration-300">
 
       {/* Parallax Floating geometric shapes */}
-      <div className="floating-objects absolute inset-0 pointer-events-none opacity-60">
-        <motion.div style={{ y: y1 }} className="absolute top-20 left-[10%] w-[100px] h-[100px] border border-black/30 rounded-full"></motion.div>
-        <motion.div style={{ y: y2 }} className="absolute top-40 right-[15%] w-[80px] h-[80px] border border-black/30 rounded-full"></motion.div>
-        <motion.div style={{ y: y3 }} className="absolute bottom-40 left-[20%] w-[120px] h-[120px] border border-black/30"></motion.div>
-        <motion.div style={{ y: y1 }} className="absolute top-[40%] right-[10%] w-[1px] h-[200px] bg-black/30"></motion.div>
+      <div className="floating-objects absolute inset-0 pointer-events-none opacity-100">
+        <motion.div style={{ y: y1 }} className="absolute top-20 left-[10%] w-[100px] h-[100px] border-[3px] border-foreground/60 rounded-full"></motion.div>
+        <motion.div style={{ y: y2 }} className="absolute top-40 right-[15%] w-[80px] h-[80px] border-[3px] border-foreground/60 rounded-full"></motion.div>
+        <motion.div style={{ y: y3 }} className="absolute bottom-40 left-[20%] w-[120px] h-[120px] border-[3px] border-foreground/60"></motion.div>
+        <motion.div style={{ y: y1 }} className="absolute top-[40%] right-[10%] w-[3px] h-[200px] bg-foreground/60"></motion.div>
       </div>
 
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
@@ -76,12 +76,12 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-[clamp(48px,8vw,88px)] font-[100] tracking-[-3px] text-black leading-[0.9] mb-8 font-display relative"
+          className="text-[clamp(48px,8vw,88px)] font-[100] tracking-[-3px] text-foreground leading-[0.9] mb-8 font-display relative"
         >
           Less Context
           <br />
           Switching.
-          <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-[60px] h-[2px] bg-black"></div>
+          <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-[60px] h-[2px] bg-foreground"></div>
         </motion.h1>
 
         {/* Subheadline */}
@@ -141,7 +141,7 @@ export const Hero = () => {
           {/* Secondary */}
           <a
             href="https://github.com/Ahad-Dngwala/KNEMOS"
-            className="text-xs uppercase tracking-[2px] font-bold text-[#888] hover:text-black transition-colors flex items-center gap-1"
+            className="text-xs uppercase tracking-[2px] font-bold text-foreground/50 hover:text-foreground transition-colors flex items-center gap-1"
           >
             View on GitHub <span>→</span>
           </a>

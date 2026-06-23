@@ -1,5 +1,6 @@
 import { Navbar } from '@/components/ui/Navbar'
 import { Hero } from '@/components/sections/Hero'
+import { Showcase } from '@/components/sections/Showcase'
 import { Marquee } from '@/components/ui/Marquee'
 import { Stats } from '@/components/sections/Stats'
 import { Solution } from '@/components/sections/Solution'
@@ -14,6 +15,7 @@ export default function Home() {
     <main>
       <Navbar />
       <Hero />
+      <Showcase />
       <Marquee />
       <Stats />
       <Solution />

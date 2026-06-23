@@ -40,8 +40,8 @@ export default function SignUpPage() {
   }
 
   return (
-    <main className="min-h-screen bg-white flex items-center justify-center px-6 relative">
-      <Link href="/" className="absolute top-8 left-8 text-xs font-bold tracking-[2px] uppercase hover:text-[#888] transition-colors flex items-center gap-2 text-black">
+    <main className="min-h-screen bg-background flex items-center justify-center px-6 relative transition-colors duration-300">
+      <Link href="/" className="absolute top-8 left-8 text-xs font-bold tracking-[2px] uppercase text-foreground/50 hover:text-foreground transition-colors flex items-center gap-2">
         <span>←</span> Back to Home
       </Link>
       
@@ -49,23 +49,23 @@ export default function SignUpPage() {
 
         <div className="flex items-center gap-2 justify-center mb-10">
           <Image src="/KNEMOS.png" alt="KNEMOS" width={32} height={32} className="w-8 h-8" />
-          <span className="font-bold text-lg tracking-widest text-black">KNEMOS</span>
+          <span className="font-bold text-lg tracking-widest text-foreground">KNEMOS</span>
         </div>
 
         {sent ? (
           <div className="text-center">
-            <div className="w-16 h-16 border border-black rotate-45 mx-auto mb-8 flex items-center justify-center">
+            <div className="w-16 h-16 border border-foreground rotate-45 mx-auto mb-8 flex items-center justify-center text-foreground">
               <span className="-rotate-45 text-2xl">✓</span>
             </div>
-            <p className="text-lg font-bold mb-2 text-black">Check your email</p>
+            <p className="text-lg font-bold mb-2 text-foreground">Check your email</p>
             <p className="text-sm text-[#888]">We sent a magic link to <strong>{email}</strong></p>
             <p className="text-sm text-[#888] mt-2">After clicking the link, you will be redirected to download KNEMOS.</p>
           </div>
         ) : (
           <>
             <div className="text-center mb-8">
-              <h1 className="text-2xl font-bold text-black font-display mb-2">Create Account</h1>
-              <p className="text-sm text-[#666]">Enter your email to get started. No password required.</p>
+              <h1 className="text-2xl font-bold text-foreground font-display mb-2">Create Account</h1>
+              <p className="text-sm text-foreground/60">Enter your email to get started. No password required.</p>
             </div>
 
             {errorMsg && (
@@ -81,12 +81,12 @@ export default function SignUpPage() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 required
-                className="w-full border border-[#E0E0E0] px-4 py-3 text-sm outline-none focus:border-black transition-colors text-black bg-white"
+                className="w-full border border-border px-4 py-3 text-sm outline-none focus:border-foreground transition-colors text-foreground bg-background"
               />
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-black text-white py-3 text-sm tracking-widest uppercase disabled:opacity-50"
+                className="w-full bg-foreground text-background py-3 text-sm tracking-widest uppercase disabled:opacity-50"
               >
                 {loading ? 'Sending...' : 'Continue with Email'}
               </button>
@@ -94,7 +94,7 @@ export default function SignUpPage() {
 
             <p className="text-center text-xs text-[#888] mt-6">
               Already have an account?{' '}
-              <Link href="/signin" className="text-black underline">Sign in</Link>
+              <Link href="/signin" className="text-foreground underline">Sign in</Link>
             </p>
           </>
         )}
