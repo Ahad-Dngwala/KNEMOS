@@ -116,12 +116,12 @@ const COMMITS = [
 ]
 
 const ROADMAP = [
-  { icon: '🔔', title: 'Focus Streak Notifications', desc: 'Native Windows toast notifications showing daily focus streaks and productivity summaries.', status: 'Planned' },
-  { icon: '📱', title: 'Mobile Companion App', desc: 'iOS & Android app syncing your Focus Score and memory timeline via a local WiFi bridge.', status: 'Planned' },
-  { icon: '🌐', title: 'Multi-Monitor Support', desc: 'Full multi-screen workspace awareness — KNEMOS tracks activity across all connected monitors simultaneously.', status: 'In Progress' },
-  { icon: '🤖', title: 'GPT-4o Integration (Optional)', desc: 'Cloud LLM fallback option for users who want more powerful AI responses while maintaining local-first defaults.', status: 'Exploring' },
-  { icon: '📊', title: 'Weekly Productivity Reports', desc: 'Beautiful auto-generated PDF reports of your weekly focus patterns, top distractions, and improvement trends.', status: 'Planned' },
-  { icon: '🎨', title: 'Custom Workspace Themes', desc: 'Per-workspace color themes — different accent colors for your "Design" vs "Coding" vs "Research" workspaces.', status: 'Planned' },
+  { title: 'Focus Streak Notifications', desc: 'Native Windows toast notifications showing daily focus streaks and productivity summaries.', status: 'Planned' },
+  { title: 'Mobile Companion App', desc: 'iOS & Android app syncing your Focus Score and memory timeline via a local WiFi bridge.', status: 'Planned' },
+  { title: 'Multi-Monitor Support', desc: 'Full multi-screen workspace awareness — KNEMOS tracks activity across all connected monitors simultaneously.', status: 'In Progress' },
+  { title: 'GPT-4o Integration (Optional)', desc: 'Cloud LLM fallback option for users who want more powerful AI responses while maintaining local-first defaults.', status: 'Exploring' },
+  { title: 'Weekly Productivity Reports', desc: 'Beautiful auto-generated PDF reports of your weekly focus patterns, top distractions, and improvement trends.', status: 'Planned' },
+  { title: 'Custom Workspace Themes', desc: 'Per-workspace color themes — different accent colors for your "Design" vs "Coding" vs "Research" workspaces.', status: 'Planned' },
 ]
 
 export default function UpdatesPage() {
@@ -282,7 +282,6 @@ export default function UpdatesPage() {
                 key={item.title}
                 className="bg-white border border-[#E0E0E0] p-6 hover:border-black transition-colors group"
               >
-                <div className="text-2xl mb-3">{item.icon}</div>
                 <div className="flex items-start justify-between gap-2 mb-2">
                   <h4 className="font-bold text-sm">{item.title}</h4>
                   <span className={`text-[10px] font-bold px-2 py-0.5 flex-shrink-0 ${
