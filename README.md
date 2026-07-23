@@ -981,11 +981,12 @@ Whether you're a developer, designer, researcher, or technical writer, there are
 
 ---
 
-# License
+# Prototype screenshot
 
-KNEMOS is released under the **MIT License**.
-
-See the [LICENSE](./LICENSE) file for complete licensing information.
+<img width="1536" height="863" alt="Screenshot 2026-06-13 221251" src="https://github.com/user-attachments/assets/49a59ee1-1ce7-4e28-8d57-857afb82b69d" />
+<img width="1535" height="827" alt="Screenshot 2026-06-12 201624" src="https://github.com/user-attachments/assets/4b426b6c-3fa8-4a68-a6aa-481600c0a87f" />
+<img width="1536" height="862" alt="Screenshot 2026-06-13 002521" src="https://github.com/user-attachments/assets/f19823b3-cda0-4d62-ac5e-fe86f32b43e7" />
+<img width="1536" height="863" alt="Screenshot 2026-06-13 221349" src="https://github.com/user-attachments/assets/dd96b928-6bae-40df-a023-5bf33ce90c03" />
 
 ---
 
