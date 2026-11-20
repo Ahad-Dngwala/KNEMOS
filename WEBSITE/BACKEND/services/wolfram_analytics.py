@@ -16,6 +16,7 @@ Wolfram Engine notes:
 import sqlite3
 import time
 import datetime
+from contextlib import closing
 
 from config import DB_PATH
 
@@ -165,12 +166,21 @@ def compute_focus_score() -> dict:
     Compute Cognitive Focus Score from last 24 hours of events.
     Tries Wolfram first, falls back to Python.
     """
-    conn = sqlite3.connect(DB_PATH, timeout=15.0)
-    events = conn.execute(
-        "SELECT event_type, timestamp FROM workspace_events WHERE timestamp > ?",
-        (int(time.time()) - 86400,)
-    ).fetchall()
-    conn.close()
+    cutoff = int(time.time()) - 86400
+    with closing(sqlite3.connect(DB_PATH, timeout=15.0)) as conn:
+        events = conn.execute(
+            "SELECT event_type, timestamp FROM workspace_events WHERE timestamp > ?",
+            (cutoff,),
+        ).fetchall()
+        # Older or standalone databases may not have run the activity-log initializer.
+        if conn.execute(
+            "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'activity_log'"
+        ).fetchone():
+            events.extend(conn.execute(
+                "SELECT event_type, timestamp FROM activity_log "
+                "WHERE event_type = 'focus_activate' AND timestamp > ?",
+                (cutoff,),
+            ).fetchall())
 
     # Try Wolfram Engine first
     wolfram_result = _compute_score_wolfram(events)
